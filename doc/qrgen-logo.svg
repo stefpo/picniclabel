@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <!-- Fond rouge Picnic -->
+  <rect width="200" height="200" rx="36" fill="#e8181b"/>
+
+  <!-- LABEL -->
+  <text
+    x="100"
+    y="90"
+    font-family="'Arial Black', 'Helvetica Neue', sans-serif"
+    font-weight="900"
+    font-size="46"
+    fill="white"
+    text-anchor="middle"
+    letter-spacing="-1"
+  >LABEL</text>
+
+
+
+  <!-- GEN -->
+  <text
+    x="100"
+    y="158"
+    font-family="'Arial Black', 'Helvetica Neue', sans-serif"
+    font-weight="900"
+    font-size="56"
+    fill="white"
+    text-anchor="middle"
+    letter-spacing="4"
+  >GEN</text>
+</svg>

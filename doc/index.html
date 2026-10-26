@@ -1,0 +1,2480 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Label Gen">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#0A0C0F">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDAgMjAwIiB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCI+CiAgPCEtLSBGb25kIHJvdWdlIFBpY25pYyAtLT4KICA8cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgcng9IjM2IiBmaWxsPSIjZTgxODFiIi8+CgogIDwhLS0gTEFCRUwgLS0+CiAgPHRleHQKICAgIHg9IjEwMCIKICAgIHk9IjkwIgogICAgZm9udC1mYW1pbHk9IidBcmlhbCBCbGFjaycsICdIZWx2ZXRpY2EgTmV1ZScsIHNhbnMtc2VyaWYiCiAgICBmb250LXdlaWdodD0iOTAwIgogICAgZm9udC1zaXplPSI0NiIKICAgIGZpbGw9IndoaXRlIgogICAgdGV4dC1hbmNob3I9Im1pZGRsZSIKICAgIGxldHRlci1zcGFjaW5nPSItMSIKICA+TEFCRUw8L3RleHQ+CgoKCiAgPCEtLSBHRU4gLS0+CiAgPHRleHQKICAgIHg9IjEwMCIKICAgIHk9IjE1OCIKICAgIGZvbnQtZmFtaWx5PSInQXJpYWwgQmxhY2snLCAnSGVsdmV0aWNhIE5ldWUnLCBzYW5zLXNlcmlmIgogICAgZm9udC13ZWlnaHQ9IjkwMCIKICAgIGZvbnQtc2l6ZT0iNTYiCiAgICBmaWxsPSJ3aGl0ZSIKICAgIHRleHQtYW5jaG9yPSJtaWRkbGUiCiAgICBsZXR0ZXItc3BhY2luZz0iNCIKICA+R0VOPC90ZXh0Pgo8L3N2Zz4K">
+<link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDAgMjAwIiB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCI+CiAgPCEtLSBGb25kIHJvdWdlIFBpY25pYyAtLT4KICA8cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgcng9IjM2IiBmaWxsPSIjZTgxODFiIi8+CgogIDwhLS0gTEFCRUwgLS0+CiAgPHRleHQKICAgIHg9IjEwMCIKICAgIHk9IjkwIgogICAgZm9udC1mYW1pbHk9IidBcmlhbCBCbGFjaycsICdIZWx2ZXRpY2EgTmV1ZScsIHNhbnMtc2VyaWYiCiAgICBmb250LXdlaWdodD0iOTAwIgogICAgZm9udC1zaXplPSI0NiIKICAgIGZpbGw9IndoaXRlIgogICAgdGV4dC1hbmNob3I9Im1pZGRsZSIKICAgIGxldHRlci1zcGFjaW5nPSItMSIKICA+TEFCRUw8L3RleHQ+CgoKCiAgPCEtLSBHRU4gLS0+CiAgPHRleHQKICAgIHg9IjEwMCIKICAgIHk9IjE1OCIKICAgIGZvbnQtZmFtaWx5PSInQXJpYWwgQmxhY2snLCAnSGVsdmV0aWNhIE5ldWUnLCBzYW5zLXNlcmlmIgogICAgZm9udC13ZWlnaHQ9IjkwMCIKICAgIGZvbnQtc2l6ZT0iNTYiCiAgICBmaWxsPSJ3aGl0ZSIKICAgIHRleHQtYW5jaG9yPSJtaWRkbGUiCiAgICBsZXR0ZXItc3BhY2luZz0iNCIKICA+R0VOPC90ZXh0Pgo8L3N2Zz4K">
+<title>Label Gen</title>
+<script>
+// ── CONFIG ─────────────────────────────────────────────
+// Modifier uniquement cette section pour mettre à jour
+// les zones sans toucher au reste du code.
+
+function range(a,b){const o=[];for(let i=a;i<=b;i++)o.push(String(i));return o;}
+
+const CFG = {
+  zones: {
+    AMBIANT: {
+      prefix:'AM', color:'--ambiant', npl:'AMBIENTNPL',
+      loc:{ allees:['C','D','E','F','G','H','I','J','0-ERG-B','ES'], rayons:[...range(1,14)], sections:range(1,9) },
+      put:{ x:range(1,7), lettres:['R','T','V'] },
+      buf:{ etag:{ xx1:range(1,20), xxx:range(1,40), xx2:['1','5','9','13'] },
+            pallet:{ xx1:[...range(1,5),'30',...range(91,99)], xx2:range(1,28) }
+            },
+    },
+    CHILL: {
+      prefix:'CH', color:'--chill', npl:'CHILLEDNPL',
+      loc:{ allees:['K','L','M','N','O','P','Q','R','ES'], rayons:[...range(1,14)], sections:range(1,9) },
+      put:{ x:['1','2','3','4'], lettres:['L','M','N','O','J','K'] },
+      buf:{ etag:{  xx1:['1','2'], xxx:range(1,44), xx2:['1','5','9','13'] },
+            pallet:{ xx1:['1'], xx2:[...range(1,30),'98','99'] } 
+          },
+    },
+    FROZEN: {
+      prefix:'FR', color:'--frozen', npl:'FREEZERNPL',
+      loc:{ allees:['C','D','E','F','G','H','ES'], rayons:['1'], sections:range(1,9) },
+      put:{ x:['1','2','3'], lettres:['A','B'] },
+      buf:{ etag:{ xx1:['1','2','3'], xxx:range(1,9), xx2:['1','5','9','13'] } },
+    },
+  },
+  overflow:{ min:1, max:99999999, pad:8 },
+  rc:{ series:[{value:'5',label:'RC-5XXXXXXX'},{value:'4',label:'RC-4XXXXXXX'},{value:'3',label:'RC-3XXXXXXX'},{value:'1',label:'RC-1XXXXXXX'},{value:'9',label:'RC-9XXXXXXX'}], min:1, max:9999999, pad:7 },
+  // Adresse en ligne de l'appli (ex. 'https://exemple.fr/labelgen/') : les liens et QR codes
+  // de partage y renvoient. Vide = l'adresse de la page, si elle est en ligne.
+  appUrl: '',
+
+  // ── TÂCHES DU JOUR (onglet 📋) ─────────────────────────
+  // Une ligne par jour. Un jour absent (ici le dimanche) = rien à faire ce jour-là.
+  // Visual BDD : date du délai = date du jour + delai (delaiDefaut si la ligne n'a pas de delai).
+  visual: {
+    delaiDefaut: 3,
+    // Date du délai tombant un dimanche : 0 = on garde le dimanche (jeudi : on retire jusqu'au dimanche inclus)
+    //                                     +1 = on passe au lundi · -1 = on passe au samedi
+    siDimanche: 0,
+    // À retirer : true  = toute date jusqu'à la date du délai INCLUSE
+    //             false = seulement les dates AVANT la date du délai
+    retirerLeJourMeme: true,
+    jours: {
+      lundi:    { zones:['K', 'Buffer', 'NPL / JIRA / UNKNOWN'] },
+      mardi:    { zones:['L', 'O'] },
+      mercredi: { zones:['M', 'P'] },
+      jeudi:    { zones:['N', 'R'] },
+      vendredi: { zones:['Buffer Pain', 'Pain'], delai:7 },
+      samedi:   { zones:['M', 'Q'] },
+    },
+  },
+  // Count Buffer : une liste par zone (affichées dans cet ordre), une ligne par jour.
+  // tous = tous les jours où la zone n'a pas sa propre ligne. Plusieurs cases : ['…', '…']
+  countBuffer: {
+    CHILL: {
+      lundi:    'Étagères fleg',
+      mardi:    'Buffer 1 · Étagères 4 à 13',
+      mercredi: 'Buffer 1 · Étagères 14 à 24',
+      jeudi:    'Buffer 1 · Étagères 25 à 34',
+      vendredi: 'Buffer 1 · Étagères 35 à 44',
+    },
+    AMBIANT: {
+      lundi:    'Buffer 1',
+      mardi:    'Buffer 2',
+      mercredi: 'Buffer 3',
+      jeudi:    'Buffer 4',
+      vendredi: 'Buffer Pallet',
+    },
+    FROZEN: {
+      tous:     'Demander au Capitaine',
+    },
+  },
+};
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.6/dist/barcodes/JsBarcode.code128.min.js"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Exo+2:wght@300;500;700;900&display=swap');
+
+:root {
+  --ambiant:#f59e0b; --chill:#38bdf8; --frozen:#a78bfa;
+  --overflow:#34d399; --rc:#fb7185; --consolidation:#f97316; --libre:#e879f9; --put:#fbbf24; --buf:#818cf8; --calc:#06b6d4; --jour:#a3e635;
+  --mono:'Share Tech Mono',monospace; --sans:'Exo 2',sans-serif;
+  --bg:#0a0c0f; --panel:#111318; --border:#1e2330;
+  --text:#e2e8f0; --muted:#4a5568; --input-bg:#0a0c0f;
+  --shadow:0 4px 24px rgba(0,0,0,.4);
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+html{height:100%}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:100dvh;
+  padding:16px 12px env(safe-area-inset-bottom);
+  padding-top:calc(16px + env(safe-area-inset-top))}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:repeating-linear-gradient(0deg,transparent,transparent 40px,rgba(255,255,255,.012) 40px,rgba(255,255,255,.012) 41px)}
+.container{max-width:640px;margin:0 auto;position:relative;z-index:1}
+header{display:flex;align-items:center;justify-content:center;margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid var(--border)}
+h1{font-size:1.3rem;font-weight:900;letter-spacing:-.02em;
+  background:linear-gradient(90deg,#fff 60%,var(--muted));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent}
+h1 span{font-weight:300}
+
+/* TABS */
+.tabs{display:flex;gap:3px;background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:3px;margin-bottom:6px}
+.tabs-sub{margin-bottom:16px}
+.tabs-sub .tab{font-size:.75rem;padding:7px 6px}
+.tab{flex:1;padding:9px 4px;border:none;border-radius:8px;background:transparent;color:var(--muted);
+  font-family:var(--sans);font-size:.78rem;font-weight:700;cursor:pointer;transition:all .2s;
+  display:flex;align-items:center;justify-content:center;gap:5px;min-height:44px}
+.tab:active{opacity:.7}
+.tab.active[data-zone="AMBIANT"]{background:rgba(245,158,11,.15);color:var(--ambiant)}
+.tab.active[data-zone="CHILL"]{background:rgba(56,189,248,.15);color:var(--chill)}
+.tab.active[data-zone="FROZEN"]{background:rgba(167,139,250,.15);color:var(--frozen)}
+.tab.active[data-zone="OVERFLOW"]{background:rgba(52,211,153,.15);color:var(--overflow)}
+.tab.active[data-zone="RC"]{background:rgba(251,113,133,.15);color:var(--rc)}
+.tab.active[data-zone="CONSOLIDATION"]{background:rgba(249,115,22,.15);color:var(--consolidation)}
+.tab.active[data-zone="LIBRE"]{background:rgba(232,121,249,.15);color:var(--libre)}
+.tab.active[data-zone="CALC"]{background:rgba(6,182,212,.15);color:var(--calc)}
+.tab.active[data-zone="SCAN"]{background:rgba(226,232,240,.12);color:var(--text)}
+.tab.active[data-zone="JOUR"]{background:rgba(163,230,53,.15);color:var(--jour)}
+.tab-icon{flex:0 0 56px}
+.dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.dot-A{background:var(--ambiant)}.dot-C{background:var(--chill)}.dot-F{background:var(--frozen)}
+.dot-O{background:var(--overflow)}.dot-R{background:var(--rc)}.dot-CO{background:var(--consolidation)}.dot-L{background:var(--libre)}.dot-CA{background:var(--calc)}
+.calc-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:14px}
+.calc-btn{padding:0;min-height:56px;border:1px solid var(--border);border-radius:10px;background:var(--panel);color:var(--text);font-family:var(--mono);font-size:1.2rem;font-weight:700;cursor:pointer;transition:background .15s}
+.calc-btn:active{background:var(--border)}
+.calc-btn.op{color:var(--calc)}
+.calc-btn.eq{background:var(--calc);color:#000;border-color:var(--calc)}
+.calc-btn.clear{color:#fb7185}
+
+/* MODE TOGGLE */
+.mode-toggle{display:flex;gap:3px;background:var(--input-bg);border:1px solid var(--border);border-radius:10px;padding:3px;margin-bottom:6px}
+.mode-toggle-sub{margin-bottom:16px}
+.mode-toggle-sub .mode-btn{font-size:.72rem}
+.mode-btn{flex:1;padding:9px 6px;min-height:44px;border:none;border-radius:7px;background:transparent;
+  color:var(--muted);font-family:var(--sans);font-size:.78rem;font-weight:700;cursor:pointer;transition:all .2s}
+.mode-btn:active{opacity:.7}
+.mode-btn.active{background:var(--border);color:var(--text)}
+
+/* BUF TOGGLE */
+.buf-toggle{display:flex;gap:3px;background:rgba(129,140,248,.08);border:1px solid rgba(129,140,248,.2);border-radius:8px;padding:3px;margin-bottom:14px}
+.buf-btn{flex:1;padding:8px;min-height:44px;border:none;border-radius:6px;background:transparent;
+  color:var(--muted);font-family:var(--sans);font-size:.75rem;font-weight:700;cursor:pointer;transition:all .2s}
+.buf-btn.active{background:rgba(129,140,248,.2);color:var(--buf)}
+
+/* SUFFIXE -1 */
+.suffix-row{display:flex;margin-bottom:14px}
+.suffix-btn{flex:1;min-height:44px;padding:10px;border:1px solid rgba(129,140,248,.25);border-radius:8px;
+  background:rgba(129,140,248,.08);color:var(--muted);font-family:var(--sans);font-size:.78rem;font-weight:700;cursor:pointer;transition:all .2s}
+.suffix-btn:active{opacity:.7}
+.suffix-btn.active{background:rgba(52,211,153,.18);border-color:rgba(52,211,153,.55);color:var(--overflow)}
+
+/* FORM */
+.form-panel{background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:16px;margin-bottom:16px;box-shadow:var(--shadow)}
+.sub-form{display:none}.sub-form.active{display:block}
+.form-grid{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:14px}
+.form-grid .field{flex:1 1 100px;min-width:80px}
+.field label{display:block;font-size:.65rem;font-weight:700;letter-spacing:.1em;color:var(--muted);text-transform:uppercase;margin-bottom:5px}
+.field select,.field input{width:100%;background:var(--input-bg);border:1px solid var(--border);border-radius:8px;
+  color:var(--text);font-family:var(--mono);font-size:1rem;padding:11px 10px;outline:none;transition:border-color .2s;appearance:none;min-height:44px}
+.field select:focus,.field input:focus{border-color:#555}
+
+/* PREVIEW */
+.preview-loc{background:var(--input-bg);border:1px solid var(--border);border-radius:12px;padding:14px 16px;margin-bottom:14px;display:flex;flex-direction:column;gap:3px}
+.preview-loc span{font-size:.62rem;font-weight:700;letter-spacing:.15em;color:var(--muted);text-transform:uppercase}
+.preview-loc code{font-family:var(--mono);font-size:clamp(1rem,4vw,1.5rem);font-weight:700;letter-spacing:.08em;line-height:1.2;word-break:break-all}
+
+/* QR */
+.live-barcode-wrap{background:#fff;border-radius:12px;padding:16px;display:flex;justify-content:center;align-items:center;min-height:172px}
+.live-barcode-wrap canvas,.live-barcode-wrap img{display:block}
+
+/* SECTIONS */
+.zone-section{display:none}.zone-section.active{display:block}
+
+/* SCAN */
+#scan-cam{position:relative;aspect-ratio:4/3;background:#000;border-radius:12px;overflow:hidden}
+#scan-video,#scan-photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+#scan-photo[hidden]{display:none}
+#scan-guide{position:absolute;left:7%;right:7%;top:50%;aspect-ratio:2.3/1;transform:translateY(-50%);
+  border:3px solid #fff;border-radius:10px;box-shadow:0 0 0 100vmax rgba(0,0,0,.35)}
+#scan-status{position:absolute;left:8px;right:8px;bottom:8px;padding:7px 10px;border-radius:8px;
+  background:rgba(0,0,0,.7);color:#fff;font-family:var(--mono);font-size:.78rem;text-align:center;word-break:break-word}
+#scan-status:empty{display:none}
+.scan-file{display:flex;align-items:center;justify-content:center}
+.scan-open{display:flex;margin-bottom:12px}
+.scan-host{margin-bottom:14px}
+#bdd-panel{margin-top:12px}
+#bdd-panel[hidden],#bdd-again[hidden]{display:none}
+#bdd-again{width:100%;margin-bottom:12px}
+#bdd-verdict{display:flex;flex-direction:column;align-items:center;gap:4px;padding:16px 12px;margin-bottom:12px;border-radius:12px;
+  border:1px solid var(--border);background:var(--input-bg);color:var(--muted);font-size:.85rem;text-align:center}
+#bdd-verdict strong{font-size:2rem;font-weight:900;letter-spacing:.02em;text-transform:uppercase}
+#bdd-verdict span{color:var(--text);font-family:var(--mono);font-size:.95rem}
+#bdd-verdict small{color:var(--muted);font-size:.72rem}
+#bdd-verdict.out{background:rgba(251,113,133,.15);border-color:rgba(251,113,133,.6);color:var(--rc)}
+#bdd-verdict.ok{background:rgba(52,211,153,.15);border-color:rgba(52,211,153,.6);color:var(--overflow)}
+#bdd-panel .field{margin-bottom:10px}
+#bdd-delais{margin:0 0 8px}
+#bdd-regle{font-size:.78rem;color:var(--muted);text-align:center}
+
+/* TÂCHES DU JOUR */
+.day-nav{display:flex;gap:6px;margin-bottom:14px}
+.day-arrow{flex:0 0 52px;min-height:56px;border:1px solid var(--border);border-radius:10px;background:var(--input-bg);
+  color:var(--text);font-size:1.6rem;cursor:pointer}
+.day-title{flex:1;min-width:0;min-height:56px;border:1px solid var(--border);border-radius:10px;background:var(--input-bg);
+  color:var(--text);font-family:var(--sans);cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px}
+.day-title small{font-size:.62rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--jour)}
+.day-title strong{font-size:1.05rem;font-weight:700}
+.day-arrow:active,.day-title:active{opacity:.7}
+.day-card{background:var(--input-bg);border:1px solid var(--border);border-radius:12px;padding:14px;margin-bottom:12px}
+.day-card:last-child{margin-bottom:0}
+.day-head{display:flex;align-items:baseline;justify-content:space-between;gap:8px;margin-bottom:12px;font-size:.95rem}
+.day-head span{font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.day-chips{display:flex;flex-wrap:wrap;gap:8px}
+.day-chip{display:flex;align-items:center;justify-content:center;min-height:52px;padding:8px 14px;border-radius:10px;
+  background:rgba(163,230,53,.1);border:1px solid rgba(163,230,53,.35);color:var(--jour);font-family:var(--mono);font-size:1rem;font-weight:700}
+.day-chip.big{min-width:64px;font-size:1.9rem}
+.day-chip.z-AMBIANT{background:rgba(245,158,11,.1);border-color:rgba(245,158,11,.35);color:var(--ambiant)}
+.day-chip.z-CHILL{background:rgba(56,189,248,.1);border-color:rgba(56,189,248,.35);color:var(--chill)}
+.day-chip.z-FROZEN{background:rgba(167,139,250,.1);border-color:rgba(167,139,250,.35);color:var(--frozen)}
+.day-zone + .day-zone{margin-top:14px}
+.day-zone-name{display:flex;align-items:center;gap:6px;margin-bottom:6px;font-size:.65rem;font-weight:700;
+  letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.day-date{display:flex;flex-direction:column;gap:3px;margin-top:14px;padding-top:12px;border-top:1px solid var(--border)}
+.day-date span{font-size:.62rem;font-weight:700;letter-spacing:.15em;color:var(--muted);text-transform:uppercase}
+.day-date code{font-family:var(--mono);font-size:clamp(1.2rem,5vw,1.6rem);font-weight:700;letter-spacing:.04em;color:var(--text)}
+.day-date small{font-size:.75rem;color:var(--muted)}
+.day-empty{color:var(--muted);font-size:.85rem}
+
+/* INSTALL BANNER */
+#install-banner{display:none;align-items:center;gap:10px;background:var(--panel);border:1px solid var(--border);
+  border-radius:12px;padding:12px 14px;margin-bottom:14px;font-size:.8rem;color:var(--muted)}
+#install-banner button{margin-left:auto;padding:7px 14px;border:none;border-radius:8px;background:var(--ambiant);
+  color:#000;font-family:var(--sans);font-size:.78rem;font-weight:700;cursor:pointer;white-space:nowrap}
+
+/* FILE D'IMPRESSION */
+.btn-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.btn-q{flex:1 1 90px;min-height:44px;padding:11px 8px;border:1px solid rgba(129,140,248,.35);border-radius:10px;
+  background:rgba(129,140,248,.12);color:var(--buf);font-family:var(--sans);font-size:.8rem;font-weight:700;cursor:pointer}
+.btn-q:active{opacity:.7}
+#queue-fab{display:none;position:fixed;right:14px;bottom:calc(14px + env(safe-area-inset-bottom));z-index:50;
+  align-items:center;gap:8px;min-height:52px;padding:0 20px;border:none;border-radius:26px;background:var(--buf);color:#000;
+  font-family:var(--sans);font-size:1rem;font-weight:900;cursor:pointer;box-shadow:0 6px 20px rgba(0,0,0,.5)}
+#queue-fab.show{display:flex}
+#queue-overlay{display:none;position:fixed;inset:0;z-index:60;background:rgba(0,0,0,.72);align-items:flex-end;justify-content:center}
+#queue-overlay.open{display:flex}
+#queue-panel{width:100%;max-width:640px;max-height:88dvh;display:flex;flex-direction:column;gap:12px;
+  background:var(--panel);border:1px solid var(--border);border-radius:18px 18px 0 0;
+  padding:16px 14px calc(16px + env(safe-area-inset-bottom))}
+#queue-head{display:flex;align-items:center;justify-content:space-between;font-size:.95rem}
+.queue-x{border:none;background:transparent;color:var(--muted);font-size:1.2rem;cursor:pointer;min-height:44px;min-width:44px}
+.queue-list{flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:8px;min-height:60px}
+.queue-item{display:flex;align-items:center;gap:10px;background:var(--input-bg);border:1px solid var(--border);border-radius:10px;padding:8px}
+.queue-item img{height:40px;width:auto;max-width:110px;background:#fff;border-radius:4px;object-fit:contain}
+.queue-item span{flex:1;font-family:var(--mono);font-size:.78rem;word-break:break-all}
+.queue-item button{border:none;background:transparent;color:#fb7185;font-size:1rem;cursor:pointer;min-height:44px;min-width:40px}
+.queue-empty{color:var(--muted);font-size:.85rem;text-align:center;padding:18px 0}
+.queue-actions{display:flex;gap:8px}
+.queue-actions button{flex:1;min-height:48px;padding:12px;border:none;border-radius:10px;font-family:var(--sans);font-size:.9rem;font-weight:700;cursor:pointer}
+#queue-print-btn{background:var(--buf);color:#000}
+#queue-share-btn,#queue-qr-btn{min-height:48px;padding:12px;border:1px solid rgba(129,140,248,.35);border-radius:10px;
+  background:rgba(129,140,248,.12);color:var(--buf);font-family:var(--sans);font-size:.9rem;font-weight:700;cursor:pointer}
+#queue-share-btn:active,#queue-qr-btn:active{opacity:.7}
+#queue-qr-overlay{display:none;position:fixed;inset:0;z-index:65;background:rgba(0,0,0,.85);align-items:center;justify-content:center;padding:16px}
+#queue-qr-overlay.open{display:flex}
+#queue-qr-card{width:min(100%,560px,100vh - 150px);display:flex;flex-direction:column;gap:10px;
+  background:#fff;border-radius:16px;padding:24px;color:#111;text-align:center}
+#queue-qr img,#queue-qr canvas{width:100%;height:auto}
+#queue-qr:empty{display:none}
+#queue-qr-note{font-size:.85rem;font-weight:700}
+.queue-qr-hint{font-size:.72rem;color:#666}
+#queue-share-link{width:100%;background:var(--input-bg);border:1px solid var(--border);border-radius:8px;
+  color:var(--muted);font-family:var(--mono);font-size:.72rem;padding:9px 10px;outline:none}
+#queue-clear-btn{background:var(--border);color:var(--text)}
+.queue-note{font-size:.68rem;color:var(--muted);text-align:center}
+#toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(84px + env(safe-area-inset-bottom));z-index:70;
+  background:var(--panel);border:1px solid var(--border);color:var(--text);padding:10px 16px;border-radius:12px;
+  font-size:.82rem;opacity:0;pointer-events:none;transition:opacity .25s}
+#toast.show{opacity:1}
+.footer-link{color:#666;text-decoration:none;transition:color 0.2s}
+.footer-link:hover{color:#1a8cff}
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header><h1>Barcode <span>Generator</span></h1></header>
+
+  <div id="install-banner">
+    📦 Installer l'app sur votre écran d'accueil
+    <button onclick="installPWA()">Installer</button>
+  </div>
+
+  <!-- TABS générés par JS -->
+  <div class="tabs" id="tabs-main"></div>
+  <div class="tabs tabs-sub" id="tabs-sub"></div>
+
+  <!-- ZONES générées par JS -->
+  <div id="zones"></div>
+
+  <!-- OVERFLOW -->
+  <div class="zone-section" id="section-OVERFLOW">
+    <div class="form-panel">
+      <div class="scan-open"><button class="btn-q scan-btn" id="scan-btn-OVERFLOW" onclick="scanToggle('OVERFLOW')">📷 Scanner l'étiquette</button></div>
+      <div class="scan-host" id="scan-host-OVERFLOW" hidden></div>
+      <div class="form-grid">
+        <div class="field"><label>Numéro (1–99999999)</label>
+          <input type="number" id="OF-num" value="1" min="1" max="99999999" oninput="updateOverflow()">
+        </div>
+      </div>
+      <div class="preview-loc"><span>Code</span><code id="preview-OVERFLOW" style="color:var(--overflow)">OF-00000001</code></div>
+      <div class="live-barcode-wrap"><div id="live-OVERFLOW"></div></div>
+    </div>
+  </div>
+
+  <!-- RC -->
+  <div class="zone-section" id="section-RC">
+    <div class="form-panel">
+      <div class="scan-open"><button class="btn-q scan-btn" id="scan-btn-RC" onclick="scanToggle('RC')">📷 Scanner l'étiquette</button></div>
+      <div class="scan-host" id="scan-host-RC" hidden></div>
+      <div class="form-grid">
+        <div class="field"><label>Série</label>
+          <select id="RC-serie" onchange="updateRC()"></select>
+        </div>
+        <div class="field"><label>Numéro (1–9999999)</label>
+          <input type="number" id="RC-num" value="1" min="1" max="9999999" oninput="updateRC()">
+        </div>
+      </div>
+      <div class="preview-loc"><span>Code</span><code id="preview-RC" style="color:var(--rc)">RC-50000001</code></div>
+      <div class="live-barcode-wrap"><div id="live-RC"></div></div>
+    </div>
+  </div>
+
+  <!-- CONSOLIDATION -->
+  <div class="zone-section" id="section-CONSOLIDATION">
+    <div class="form-panel">
+      <div class="preview-loc"><span>Code</span><code style="color:var(--consolidation)">CONSOLIDATION</code></div>
+      <div class="live-barcode-wrap"><div id="live-CONSOLIDATION"></div></div>
+    </div>
+  </div>
+
+  <!-- LIBRE -->
+  <div class="zone-section" id="section-LIBRE">
+    <div class="form-panel">
+      <div class="scan-open"><button class="btn-q scan-btn" id="scan-btn-LIBRE" onclick="scanToggle('LIBRE')">📷 Scanner un texte</button></div>
+      <div class="scan-host" id="scan-host-LIBRE" hidden></div>
+      <div class="form-grid">
+        <div class="field" style="flex:1 1 100%"><label>Titre ligne 1 (optionnel)</label>
+          <input type="text" id="LIBRE-title" placeholder="Titre..." oninput="updateLibre()">
+        </div>
+        <div class="field" style="flex:1 1 100%"><label>Titre ligne 2 (optionnel)</label>
+          <input type="text" id="LIBRE-title2" placeholder="Titre ligne 2..." oninput="updateLibre()">
+        </div>
+        <div class="field" style="flex:1 1 100%"><label>QR Code</label>
+          <input type="text" id="LIBRE-text" placeholder="Saisir le texte..." oninput="updateLibre()" style="text-transform:uppercase">
+        </div>
+      </div>
+      <div class="preview-loc"><span>Code</span><code id="preview-LIBRE" style="color:var(--libre)"></code></div>
+      <div id="libre-qr-row" class="live-barcode-wrap" style="justify-content:center;gap:20px">
+        <div id="live-LIBRE-qr" style="flex-shrink:0"></div>
+        <div id="libre-qr-title-box" style="display:flex;flex-direction:column;justify-content:center;gap:8px;font-family:var(--mono);font-weight:700;font-size:1.15rem;letter-spacing:.06em;color:#000;min-width:0;word-break:break-word">
+          <span id="libre-qr-title1"></span>
+          <span id="libre-qr-title2"></span>
+        </div>
+      </div>
+      <div id="libre-btns" style="display:none;flex-wrap:wrap;gap:8px;margin-top:12px">
+        <button onclick="printLibre()" class="btn-print" style="flex:1;padding:12px;border:none;border-radius:10px;background:var(--border);color:var(--text);font-family:var(--sans);font-size:.9rem;font-weight:700;cursor:pointer">🖨 Imprimer</button>
+        <button class="btn-q" onclick="queueLibre()" style="flex:1 1 100%">＋🖨</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- CALC -->
+  <div class="zone-section" id="section-CALC">
+    <div class="form-panel">
+      <div class="preview-loc" style="margin-bottom:10px">
+        <span>Expression</span>
+        <code id="calc-expr" style="color:var(--text);font-size:clamp(1rem,4vw,1.4rem);min-height:1.4em;word-break:break-all">0</code>
+      </div>
+      <div class="preview-loc" style="margin-bottom:14px">
+        <span>Résultat</span>
+        <code id="calc-result" style="color:var(--calc);font-size:clamp(1.2rem,5vw,1.8rem);min-height:1.4em;word-break:break-all"></code>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin-bottom:8px">
+        <button class="calc-btn op" onclick="calcInput('10')">10</button>
+        <button class="calc-btn op" onclick="calcInput('12')">12</button>
+        <button class="calc-btn op" onclick="calcInput('16')">16</button>
+        <button class="calc-btn op" onclick="calcInput('18')">18</button>
+        <button class="calc-btn op" onclick="calcInput('20')">20</button>
+        <button class="calc-btn op" onclick="calcInput('24')">24</button>
+      </div>
+      <div class="calc-grid">
+        <button class="calc-btn clear" onclick="calcInput('C')" style="grid-column:span 2">C</button>
+        <button class="calc-btn op" onclick="calcInput('back')">⌫</button>
+        <button class="calc-btn op" onclick="calcInput('/')">÷</button>
+
+        <button class="calc-btn" onclick="calcInput('7')">7</button>
+        <button class="calc-btn" onclick="calcInput('8')">8</button>
+        <button class="calc-btn" onclick="calcInput('9')">9</button>
+        <button class="calc-btn op" onclick="calcInput('*')">×</button>
+
+        <button class="calc-btn" onclick="calcInput('4')">4</button>
+        <button class="calc-btn" onclick="calcInput('5')">5</button>
+        <button class="calc-btn" onclick="calcInput('6')">6</button>
+        <button class="calc-btn op" onclick="calcInput('-')">−</button>
+
+        <button class="calc-btn" onclick="calcInput('1')">1</button>
+        <button class="calc-btn" onclick="calcInput('2')">2</button>
+        <button class="calc-btn" onclick="calcInput('3')">3</button>
+        <button class="calc-btn op" onclick="calcInput('+')">+</button>
+
+        <button class="calc-btn" onclick="calcInput('0')" style="grid-column:span 2">0</button>
+        <button class="calc-btn op" onclick="calcInput('.')">.</button>
+        <button class="calc-btn eq" onclick="calcInput('=')">＝</button>
+      </div>
+      <div class="live-barcode-wrap" style="min-height:182px"><div id="live-CALC"></div></div>
+    </div>
+  </div>
+
+  <!-- SCAN -->
+  <div class="zone-section" id="section-SCAN">
+    <div class="form-panel">
+      <div class="mode-toggle" id="scan-modes" style="margin-bottom:12px">
+        <button class="mode-btn active" data-mode="label" onclick="scanSetMode('label')">🏷 Étiquette</button>
+        <button class="mode-btn" data-mode="date" onclick="scanSetMode('date')">📅 Date BDD</button>
+      </div>
+      <!-- bloc caméra : déplacé dans le formulaire où l'on scanne (Localisation, Put, Buffer, RC, Overflow, Libre) -->
+      <div id="scan-home">
+        <div id="scan-live">
+          <div id="scan-cam">
+            <video id="scan-video" playsinline muted></video>
+            <img id="scan-photo" alt="" hidden>
+            <div id="scan-guide"></div>
+            <div id="scan-status"></div>
+          </div>
+          <div class="btn-row">
+            <label class="btn-q scan-file">🖼 Photo<input type="file" accept="image/*" onchange="scanFile(this)" hidden></label>
+          </div>
+        </div>
+      </div>
+      <!-- mode 📅 : la date d'un produit est-elle à retirer aujourd'hui ? (règle dans CFG.visual) -->
+      <div id="bdd-panel" hidden>
+        <button class="btn-q" id="bdd-again" onclick="scanStart('SCAN')" hidden>📷 Scanner une autre date</button>
+        <div id="bdd-verdict"></div>
+        <div class="field"><label>Date sur le produit</label><input type="date" id="bdd-date" oninput="bddLue=false;bddRender()"></div>
+        <div class="mode-toggle" id="bdd-delais"></div>
+        <div id="bdd-regle"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TÂCHES DU JOUR : Visual BDD et Count Buffer (planning dans CFG.visual et CFG.countBuffer) -->
+  <div class="zone-section" id="section-JOUR">
+    <div class="form-panel">
+      <div class="day-nav">
+        <button class="day-arrow" onclick="dayShift(-1)" aria-label="Jour précédent">‹</button>
+        <button class="day-title" onclick="dayShift(0)" title="Revenir à aujourd'hui"><small id="day-rel"></small><strong id="day-name"></strong></button>
+        <button class="day-arrow" onclick="dayShift(1)" aria-label="Jour suivant">›</button>
+      </div>
+      <div class="day-card">
+        <div class="day-head"><strong>👁 Visual BDD</strong><span id="day-visual-delai"></span></div>
+        <div id="day-visual"></div>
+      </div>
+      <div class="day-card">
+        <div class="day-head"><strong>📦 Count Buffer</strong></div>
+        <div id="day-count"></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- FILE D'IMPRESSION -->
+<button id="queue-fab" onclick="queueOpen()" title="File d'impression">🖨 <span id="queue-count">0</span></button>
+<div id="queue-overlay" onclick="if(event.target===this)queueClose()">
+  <div id="queue-panel">
+    <div id="queue-head">
+      <strong>File d'impression <span id="queue-count2">(0)</span></strong>
+      <button class="queue-x" onclick="queueClose()">✕</button>
+    </div>
+    <div class="queue-list" id="queue-list"></div>
+    <div class="queue-actions">
+      <button id="queue-print-btn" onclick="queuePrint()">🖨 Imprimer la file</button>
+      <button id="queue-clear-btn" onclick="queueClear()">🗑 Vider</button>
+    </div>
+    <div class="queue-actions">
+      <button id="queue-share-btn" onclick="queueShare()">🔗 Copier le lien</button>
+      <button id="queue-qr-btn" onclick="queueQR()">📱 QR code</button>
+    </div>
+    <input id="queue-share-link" readonly hidden onclick="this.select()">
+    <p class="queue-note">La file reste sur cet appareil · le lien et son QR code contiennent les étiquettes elles-mêmes, aucun serveur</p>
+  </div>
+</div>
+<div id="queue-qr-overlay" onclick="queueQRClose()">
+  <div id="queue-qr-card">
+    <div id="queue-qr"></div>
+    <p id="queue-qr-note"></p>
+    <p class="queue-qr-hint">Touchez pour fermer</p>
+  </div>
+</div>
+<div id="toast"></div>
+
+<script>
+// ── HAPTIC ─────────────────────────────────────────────
+document.addEventListener('click', e => { if (e.target.closest('button')) navigator.vibrate?.(50); });
+
+// ── PWA ────────────────────────────────────────────────
+let deferredPrompt;
+window.addEventListener('beforeinstallprompt', e => {
+  e.preventDefault(); deferredPrompt = e;
+  document.getElementById('install-banner').style.display = 'flex';
+});
+function installPWA() {
+  if (!deferredPrompt) return;
+  deferredPrompt.prompt();
+  deferredPrompt.userChoice.then(() => {
+    document.getElementById('install-banner').style.display = 'none';
+    deferredPrompt = null;
+  });
+}
+
+// ── STATE ───────────────────────────────────────────────
+const ZONES = Object.keys(CFG.zones);
+const zoneMode = {}, bufMode = {}, bufSuffix = {};
+ZONES.forEach(z => { zoneMode[z] = 'loc'; bufMode[z] = 'etag'; bufSuffix[z] = false; });
+
+// ── QR RENDER ───────────────────────────────────────────
+function renderQR(id, code) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  try {
+    el.innerHTML = '';
+    new QRCode(el, { text: code, width: 150, height: 150, colorDark: '#000', colorLight: '#fff', correctLevel: QRCode.CorrectLevel.M });
+  } catch(e) {}
+}
+
+// ── CODE BUILDERS ───────────────────────────────────────
+const $ = id => document.getElementById(id);
+const val = id => $(id) ? $(id).value : '';
+const pad = (n, l) => String(parseInt(n) || 1).padStart(l, '0');
+
+function locCode(z) {
+  const p = CFG.zones[z].prefix;
+  return `${p}-${val(p+'-allee')}-${pad(val(p+'-etag'),3)}-${pad(val(p+'-rayon'),2)}-${val(p+'-section')}`;
+}
+function putCode(z) {
+  const p = CFG.zones[z].prefix;
+  return `${p}-PUT-${val(p+'-put-x')}-${val(p+'-put-lettre')}`;
+}
+function bufCode(z, t) {
+  const p = CFG.zones[z].prefix;
+  if (t === 'pallet') return `${p}-PALLET-${pad(val(p+'-buf-pxx1'),2)}-${pad(val(p+'-buf-pxx2'),2)}`;
+  const sfx = bufSuffix[z] ? '-1' : '';
+  return `${p}-BUF-${pad(val(p+'-buf-xx1'),2)}-${pad(val(p+'-buf-xxx'),3)}-${pad(val(p+'-buf-xx2'),2)}${sfx}`;
+}
+function overflowCode() { return 'OF-' + pad(val('OF-num'), 8); }
+function rcCode() {
+  const s = val('RC-serie'), n = Math.max(1, Math.min(9999999, parseInt(val('RC-num')) || 1));
+  return 'RC-' + s + String(n).padStart(7, '0');
+}
+
+// ── UPDATERS ────────────────────────────────────────────
+function updateLoc(z)  { const p=CFG.zones[z].prefix, el=$(p+'-etag'); if(el){const v=parseInt(el.value)||1; if(v>200){el.value=200;} else if(v<1){el.value=1;}} const c=locCode(z); $('preview-'+z).textContent=c; renderQR('live-'+z+'-loc', c); }
+function updatePut(z) {
+  const c = putCode(z);
+  $('preview-'+z+'-put').textContent = c;
+  renderQR('live-'+z+'-put', c);
+}
+function updateNpl(z)  { renderQR('live-'+z+'-npl', CFG.zones[z].npl); }
+function updateBuf(z)  { const t=bufMode[z], c=bufCode(z,t); $('preview-'+z+'-buf-'+t).textContent=c; renderQR('live-'+z+'-buf-'+t, c); }
+function updateLibre() {
+  const el=$('LIBRE-text'); if(!el) return;
+  const c=el.value.toUpperCase();
+  const t=$('LIBRE-title').value||'';
+  const t2=($('LIBRE-title2')&&$('LIBRE-title2').value)||'';
+  $('preview-LIBRE').textContent=c;
+  // QR seul (aucun titre) : son contenu s'affiche à côté, comme sur l'étiquette imprimée
+  $('libre-qr-title1').textContent=t||t2?t:c;
+  $('libre-qr-title2').textContent=t2;
+  const titleCount = (t?1:0)+(t2?1:0);
+  $('libre-qr-title-box').style.fontSize = titleCount <= 1 ? '2rem' : '1.45rem';
+  $('libre-qr-title-box').style.gap = titleCount <= 1 ? '0' : '8px';
+  const qrEl=$('live-LIBRE-qr');
+  if(c){try{qrEl.innerHTML='';new QRCode(qrEl,{text:c,width:140,height:140,colorDark:'#000',colorLight:'#fff',correctLevel:QRCode.CorrectLevel.M});}catch(e){qrEl.innerHTML='';}}else{qrEl.innerHTML='';}
+  $('libre-btns').style.display=!!(c||t||t2)?'flex':'none';
+}
+function libreCanvasQR(spec, cb) {
+  const titles = [spec.t1, spec.t2].filter(Boolean);
+  if (!spec.c && !titles.length) { cb(null); return; }
+  // Titre seulement (pas de QR code)
+  if (!spec.c && titles.length) {
+    const scale = 3, pad = 8 * scale, gutter = 16, fontSize = (titles.length <= 1 ? 32 : 23) * scale, lineH = fontSize * 1.45;
+    const tmpCtx = document.createElement('canvas').getContext('2d');
+    tmpCtx.font = `bold ${fontSize}px monospace`;
+    const textW = Math.max(...titles.map(tt => tmpCtx.measureText(tt).width)) + gutter * scale * 2;
+    const canvas = document.createElement('canvas');
+    canvas.width = textW + pad * 2; canvas.height = titles.length * lineH + pad * 2;
+    const ctx = canvas.getContext('2d');
+    ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = '#000'; ctx.font = `bold ${fontSize}px monospace`;
+    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    const startY = pad + (canvas.height - pad * 2 - titles.length * lineH) / 2 + lineH / 2;
+    titles.forEach((tt, i) => ctx.fillText(tt, canvas.width / 2, startY + i * lineH));
+    cb(canvas); return;
+  }
+  // QR seul (aucun titre) : son contenu s'affiche à côté, à la place du titre
+  if (!titles.length) titles.push(spec.c);
+  const scale = 3;
+  const qrSize = 140;
+  const gutter = 14;
+  const fontSize = (titles.length <= 1 ? 32 : 23) * scale;
+  const lineH = fontSize * 1.45;
+
+  const doRender = (src) => {
+    const pad = 11 * scale;
+    const tmpCtx = document.createElement('canvas').getContext('2d');
+    tmpCtx.font = `bold ${fontSize}px monospace`;
+    const textW = titles.length ? Math.max(...titles.map(tt => tmpCtx.measureText(tt).width)) + gutter * scale : 0;
+    const canvas = document.createElement('canvas');
+    canvas.width  = pad * 2 + qrSize * scale + (textW > 0 ? gutter * scale + textW : 0);
+    canvas.height = pad * 2 + qrSize * scale;
+    const ctx = canvas.getContext('2d');
+    ctx.fillStyle = '#fff';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.drawImage(src, pad, pad, qrSize * scale, qrSize * scale);
+    if (titles.length) {
+      ctx.fillStyle = '#000';
+      ctx.font = `bold ${fontSize}px monospace`;
+      ctx.textAlign = 'left';
+      ctx.textBaseline = 'middle';
+      const totalH = titles.length * lineH;
+      let y = pad + (qrSize * scale - totalH) / 2 + lineH / 2;
+      titles.forEach(tt => { ctx.fillText(tt, pad + qrSize * scale + gutter * scale, y); y += lineH; });
+    }
+    cb(canvas);
+  };
+
+  specQR(spec.c, qrSize, src => { if (src) doRender(src); else cb(null); });
+}
+function printLibre() {
+  specCanvas(specLibre(), canvas => { if (canvas) printCanvas(canvas); });
+}
+// ── SPECS D'ÉTIQUETTE ───────────────────────────────────
+// Une étiquette se résume à {k: type, c: code} (+ t1/t2 pour Libre).
+// Tout le rendu part de cette recette : c'est ce qui permet de la
+// partager par lien et de la régénérer à l'identique ailleurs.
+const specLoc       = z => ({ k:'lr', c:$('preview-'+z).textContent });
+const specLocPick   = z => ({ k:'lp', c:$('preview-'+z).textContent });
+const specPut       = z => ({ k:'pu', c:$('preview-'+z+'-put').textContent });
+const specNpl       = z => ({ k:'np', c:CFG.zones[z].npl });
+const specBufEtag   = z => ({ k:'be', c:$('preview-'+z+'-buf-etag').textContent });
+const specBufPallet = z => ({ k:'bp', c:$('preview-'+z+'-buf-pallet').textContent });
+const specLibre     = () => ({ k:'li', c:($('LIBRE-text').value || '').toUpperCase(),
+                               t1:$('LIBRE-title').value || '',
+                               t2:($('LIBRE-title2') && $('LIBRE-title2').value) || '' });
+
+function specCanvas(spec, cb) {
+  if (!spec) { cb(null); return; }
+  if (spec.k === 'lp') return locPickCanvas(spec.c, cb);
+  if (spec.k === 'be') return bufEtagPickCanvas(spec.c, cb);
+  if (spec.k === 'li') return libreCanvasQR(spec, cb);
+  return qrWithLabelCanvas(spec.c, cb);
+}
+function specName(spec) {
+  if (spec.k === 'lr') return spec.c + ' · Repl';
+  if (spec.k === 'lp') return spec.c + ' · Pick';
+  if (spec.k === 'li') return spec.c || [spec.t1, spec.t2].filter(Boolean).join(' ') || 'Libre';
+  return spec.c;
+}
+// Même clé = même étiquette : c'est ce qui sert à refuser les doublons dans la file
+function specKey(spec) { return JSON.stringify([spec.k, spec.c, spec.t1 || '', spec.t2 || '']); }
+
+// ── SHARED CANVAS / PRINT ───────────────────────────────
+// Rend un QR hors écran : le dessin ne dépend plus des QR affichés.
+function specQR(text, size, cb) {
+  if (!text) { cb(null); return; }
+  const holder = document.createElement('div');
+  holder.style.cssText = 'position:absolute;left:-9999px;top:-9999px';
+  document.body.appendChild(holder);
+  let src = null;
+  try {
+    new QRCode(holder, { text, width:size, height:size, colorDark:'#000', colorLight:'#fff', correctLevel: QRCode.CorrectLevel.M });
+    src = holder.querySelector('canvas') || holder.querySelector('img');
+  } catch(e) {}
+  if (!src) { holder.remove(); cb(null); return; }
+  const done = () => { cb(src); holder.remove(); };
+  if (src.tagName === 'CANVAS' || src.complete) done();
+  else src.onload = done;
+}
+
+function qrWithLabelCanvas(code, cb) {
+  const scale = 3, pad = 14, qrSize = 150, gutter = 24, fontSize = 48 * scale;
+  const tmpCtx = document.createElement('canvas').getContext('2d');
+  tmpCtx.font = `bold ${fontSize}px monospace`;
+  const textW = code ? tmpCtx.measureText(code).width + gutter * scale : 0;
+  const canvas = document.createElement('canvas');
+  canvas.width  = pad * 2 * scale + qrSize * scale + textW;
+  canvas.height = pad * 2 * scale + qrSize * scale;
+  const ctx = canvas.getContext('2d');
+  ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, canvas.width, canvas.height);
+  const doRender = src => {
+    ctx.drawImage(src, pad * scale, pad * scale, qrSize * scale, qrSize * scale);
+    if (code) {
+      ctx.fillStyle = '#000'; ctx.font = `bold ${fontSize}px monospace`;
+      ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
+      ctx.fillText(code, pad * scale + qrSize * scale + gutter * scale, pad * scale + qrSize * scale / 2);
+    }
+    cb(canvas);
+  };
+  specQR(code, qrSize, src => { if (src) doRender(src); else cb(null); });
+}
+function printCanvas(canvas) {
+  const dataUrl = canvas.toDataURL('image/png');
+  let iframe = document.getElementById('print-frame');
+  if (iframe) iframe.remove();
+  iframe = document.createElement('iframe');
+  iframe.id = 'print-frame';
+  iframe.style.cssText = 'position:fixed;top:-9999px;left:-9999px;width:0;height:0;border:0';
+  document.body.appendChild(iframe);
+  const doc = iframe.contentDocument || iframe.contentWindow.document;
+  doc.open();
+  doc.write(`<!DOCTYPE html><html><head><meta charset="UTF-8"><style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    @page{margin:0;size:auto}
+    body{background:#fff;display:flex;justify-content:center;align-items:center;min-height:100vh}
+    img{display:block;max-width:100%;max-height:100vh}
+  </style></head><body><img src="${dataUrl}"></body></html>`);
+  doc.close();
+  iframe.onload = () => { iframe.contentWindow.focus(); iframe.contentWindow.print(); };
+}
+// PUT
+function printPut(z) { specCanvas(specPut(z), cv=>{if(cv)printCanvas(cv);}); }
+// LOC
+function printLoc(z) { specCanvas(specLoc(z), cv=>{if(cv)printCanvas(cv);}); }
+// BUF
+function printBuf(z) { const t=bufMode[z]; specCanvas({k:t==='pallet'?'bp':'q', c:$('preview-'+z+'-buf-'+t).textContent}, cv=>{if(cv)printCanvas(cv);}); }
+// NPL
+function printNpl(z) { specCanvas(specNpl(z), cv=>{if(cv)printCanvas(cv);}); }
+// LOC PICK
+function locPickCanvas(code, cb) {
+  // code : <P>-<allée>-<étagère 3c>-<rayon 2c>-<section>
+  // lu par la fin : l'allée peut contenir des tirets (0-ERG-B)
+  const f = code.split('-'), section = f.pop(), rayon2 = f.pop(), etag3 = f.pop(), p = f.shift(), allee = f.join('-');
+  const zoneAllee = `${p}-${allee}`;
+  const etagStr   = String(parseInt(etag3) || 1);
+  const rayonSec  = `${rayon2}-${section}`;
+  const scale = 3, qrSize = 150, padPx = 10, gutter = 26;
+  const innerH = qrSize * scale;
+  const labelFontSize = Math.floor(innerH / 2.6);
+  const line1FontSize = Math.floor(labelFontSize * 0.72);
+  const bigFontSize   = Math.floor(innerH * 0.72);
+  const tmp = document.createElement('canvas').getContext('2d');
+  tmp.font = `bold ${line1FontSize}px monospace`;
+  const wZA  = tmp.measureText(zoneAllee).width;
+  tmp.font = `bold ${labelFontSize}px monospace`;
+  const wEtag = tmp.measureText(etagStr).width;
+  const leftW = Math.max(wZA, wEtag);
+  tmp.font = `bold ${bigFontSize}px monospace`;
+  const wBig = tmp.measureText(rayonSec).width;
+
+  const isChill = p === 'CH';
+  const sepW = 4 * scale;
+  const midW = isChill ? sepW : qrSize * scale;
+
+  const canvas = document.createElement('canvas');
+  canvas.width  = padPx * scale + leftW + gutter * scale + midW + gutter * scale + wBig + padPx * scale;
+  canvas.height = padPx * 2 * scale + innerH;
+  const ctx = canvas.getContext('2d');
+  ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  const render = src => {
+    const yTop = padPx * scale;
+    const xLeftCenter = padPx * scale + leftW / 2;
+    const xMid = padPx * scale + leftW + gutter * scale;
+    const xBigCenter = xMid + midW + gutter * scale + wBig / 2;
+    ctx.fillStyle = '#000'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    ctx.font = `bold ${line1FontSize}px monospace`;
+    ctx.fillText(zoneAllee, xLeftCenter, yTop + innerH * 0.30);
+    ctx.font = `bold ${labelFontSize}px monospace`;
+    ctx.fillText(etagStr, xLeftCenter, yTop + innerH * 0.70);
+    if (isChill) {
+      ctx.fillRect(xMid, yTop, sepW, innerH);
+    } else {
+      ctx.drawImage(src, xMid, yTop, qrSize * scale, qrSize * scale);
+    }
+    ctx.font = `bold ${bigFontSize}px monospace`;
+    ctx.fillText(rayonSec, xBigCenter, yTop + innerH / 2);
+    cb(canvas);
+  };
+
+  if (isChill) { render(null); return; }
+  specQR(code, qrSize, src => { if (src) render(src); else cb(null); });
+}
+function printLocPick(z) { specCanvas(specLocPick(z), cv => { if (cv) printCanvas(cv); }); }
+function printDualLoc(z) { printDual(specLoc(z), specLocPick(z)); }
+function printDual(s1, s2) {
+  let cv1 = null, cv2 = null;
+  const tryPrint = () => {
+    if (!cv1 || !cv2) return;
+    const d1 = cv1.toDataURL('image/png'), d2 = cv2.toDataURL('image/png');
+    let iframe = document.getElementById('print-frame');
+    if (iframe) iframe.remove();
+    iframe = document.createElement('iframe');
+    iframe.id = 'print-frame';
+    iframe.style.cssText = 'position:fixed;top:-9999px;left:-9999px;width:0;height:0;border:0';
+    document.body.appendChild(iframe);
+    const doc = iframe.contentDocument || iframe.contentWindow.document;
+    doc.open();
+    doc.write(`<!DOCTYPE html><html><head><meta charset="UTF-8"><style>
+      *{margin:0;padding:0;box-sizing:border-box}
+      @page{margin:0;size:auto}
+      .page{display:flex;justify-content:center;align-items:center;min-height:100vh;background:#fff;page-break-after:always}
+      img{display:block;max-width:100%;max-height:100vh}
+    </style></head><body>
+      <div class="page"><img src="${d1}"></div>
+      <div class="page"><img src="${d2}"></div>
+    </body></html>`);
+    doc.close();
+    iframe.onload = () => { iframe.contentWindow.focus(); iframe.contentWindow.print(); };
+  };
+  specCanvas(s1, cv => { cv1 = cv; tryPrint(); });
+  specCanvas(s2, cv => { cv2 = cv; tryPrint(); });
+}
+// BUF ETAG PICK
+function bufEtagPickCanvas(code, cb) {
+  // code : <P>-BUF-<numéro 2c>-<étagère 3c>-<rayon 2c>[-1]
+  const f = code.split('-');
+  const big = `${parseInt(f[3]) || 1}-${f[4]}${f[5] ? '-' + f[5] : ''}`;
+  const scale = 3, qrSize = 150, padPx = 10, gutter = 26;
+  const innerH = qrSize * scale;
+  const codeFontSize = Math.floor(innerH * 0.20);
+  const bigFontSize  = Math.floor(innerH * 0.56);
+  const tmp = document.createElement('canvas').getContext('2d');
+  // hauteurs réelles des glyphes : le bloc de 2 lignes est centré optiquement
+  tmp.font = `bold ${codeFontSize}px monospace`;
+  const mCode = tmp.measureText(code);
+  const wCode = mCode.width;
+  const hCode = (mCode.actualBoundingBoxAscent + mCode.actualBoundingBoxDescent) || codeFontSize * 0.72;
+  tmp.font = `bold ${bigFontSize}px monospace`;
+  const mBig = tmp.measureText(big);
+  const wBig = mBig.width;
+  const hBig = (mBig.actualBoundingBoxAscent + mBig.actualBoundingBoxDescent) || bigFontSize * 0.72;
+  const centerW = Math.max(wCode, wBig);
+  // espace vertical : interligne ≈ 2,2× les marges haute et basse
+  const vMargin = (innerH - hCode - hBig) / 4.2;
+  const lineGap = vMargin * 2.2;
+  const canvas = document.createElement('canvas');
+  canvas.width  = padPx * scale * 2 + qrSize * scale * 2 + gutter * scale * 2 + centerW;
+  canvas.height = padPx * 2 * scale + innerH;
+  const ctx = canvas.getContext('2d');
+  ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, canvas.width, canvas.height);
+  const render = src => {
+    const yTop = padPx * scale;
+    const xLeftQR = padPx * scale;
+    const xCenter = xLeftQR + qrSize * scale + gutter * scale + centerW / 2;
+    const xRightQR = xCenter + centerW / 2 + gutter * scale;
+    const yBlock = yTop + vMargin;
+    ctx.drawImage(src, xLeftQR, yTop, qrSize * scale, qrSize * scale);
+    ctx.drawImage(src, xRightQR, yTop, qrSize * scale, qrSize * scale);
+    ctx.fillStyle = '#000'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    ctx.font = `bold ${codeFontSize}px monospace`;
+    ctx.fillText(code, xCenter, yBlock + hCode / 2);
+    ctx.font = `bold ${bigFontSize}px monospace`;
+    ctx.fillText(big, xCenter, yBlock + hCode + lineGap + hBig / 2);
+    cb(canvas);
+  };
+  specQR(code, qrSize, src => { if (src) render(src); else cb(null); });
+}
+function printBufEtagPick(z) { specCanvas(specBufEtag(z), cv => { if (cv) printCanvas(cv); }); }
+function updateOverflow() { const el=$('OF-num'); if(el){const v=parseInt(el.value)||1; if(v>CFG.overflow.max){el.value=CFG.overflow.max;} else if(v<1){el.value=1;}} const c=overflowCode(); $('preview-OVERFLOW').textContent=c; renderQR('live-OVERFLOW', c); }
+function updateRC()       { const el=$('RC-num'); if(el){const v=parseInt(el.value)||1; if(v>CFG.rc.max){el.value=CFG.rc.max;} else if(v<1){el.value=1;}} const c=rcCode(); $('preview-RC').textContent=c; renderQR('live-RC', c); }
+
+// ── CALCULATOR ──────────────────────────────────────────
+let calcExpr = '';
+document.addEventListener('keydown', e => {
+  if (!$('section-CALC')?.classList.contains('active')) return;
+  if (e.target.tagName === 'INPUT' || e.target.tagName === 'SELECT') return;
+  const map = {'Enter':'=','=':'=','Backspace':'back','Escape':'C','c':'C','C':'C'};
+  const allowed = '0123456789+-*/.';
+  if (map[e.key]) { e.preventDefault(); calcInput(map[e.key]); }
+  else if (allowed.includes(e.key)) { e.preventDefault(); calcInput(e.key); }
+});
+function calcInput(key) {
+  if (key === 'C') { calcExpr = ''; }
+  else if (key === 'back') { calcExpr = calcExpr.slice(0, -1); }
+  else if (key === '=') {
+    try { calcExpr = String(Function('"use strict";return(' + calcExpr + ')')()) ; } catch(e) {}
+  } else { calcExpr += key; }
+  updateCalc();
+}
+function updateCalc() {
+  const exprEl = $('calc-expr'), resEl = $('calc-result');
+  exprEl.textContent = calcExpr || '0';
+  let result = '';
+  if (calcExpr) {
+    try {
+      const r = Function('"use strict";return(' + calcExpr + ')')();
+      result = isFinite(r) ? String(r) : '';
+    } catch(e) {}
+  }
+  resEl.textContent = result;
+  if (result) renderQR('live-CALC', result);
+  else $('live-CALC').innerHTML = '';
+}
+
+// ── SCAN ────────────────────────────────────────────────
+// Lit une étiquette à la caméra et ouvre le formulaire qui lui correspond, rempli :
+// l'onglet 📷 reconnaît tout (Localisation, Put, Buffer, NPL, RC, Overflow, Consolidation),
+// le bouton 📷 d'un formulaire ne cherche que son type ; celui de Libre lit un texte quelconque. Une seule caméra : le bloc #scan-live est
+// déplacé là où l'on scanne.
+// La lecture (Tesseract, ~4,5 Mo) n'est chargée qu'à la première ouverture de l'onglet,
+// puis gardée en cache par le navigateur.
+const SCAN_OCR = 'https://cdn.jsdelivr.net/npm/tesseract.js@7.0.0/dist/tesseract.min.js';
+const SCAN_QR  = 'https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js';
+// mode de l'onglet 📷 : 'label' (étiquettes) ou 'date' (date d'un produit, à retirer ou non)
+const scan = { run: 0, slot: 'SCAN', mode: 'label', stream: null, engine: null, qr: null, bd: undefined, chars: '', hist: [], t0: 0, photo: null };
+
+// Seuillage adaptatif (Bradley) : 1 = encre, 0 = fond. Un fond sombre
+// uniforme (rayonnage, papier coloré) reste du fond : seul le contraste local compte.
+function scanBinarize(img) {
+  const { width: w, height: h, data: d } = img, W = w + 1;
+  const g = new Uint8Array(w * h);
+  for (let i = 0, j = 0; i < g.length; i++, j += 4) g[i] = (d[j] * 77 + d[j + 1] * 150 + d[j + 2] * 29) >> 8;
+  const I = new Float64Array(W * (h + 1));
+  for (let y = 0; y < h; y++) {
+    let row = 0;
+    for (let x = 0; x < w; x++) { row += g[y * w + x]; I[(y + 1) * W + x + 1] = I[y * W + x + 1] + row; }
+  }
+  const r = Math.max(8, Math.round(Math.max(w, h) / 16)), bin = new Uint8Array(w * h);
+  for (let y = 0; y < h; y++) {
+    const y0 = Math.max(0, y - r), y1 = Math.min(h, y + r + 1);
+    for (let x = 0; x < w; x++) {
+      const x0 = Math.max(0, x - r), x1 = Math.min(w, x + r + 1);
+      const mean = (I[y1 * W + x1] - I[y0 * W + x1] - I[y1 * W + x0] + I[y0 * W + x0]) / ((x1 - x0) * (y1 - y0));
+      const v = g[y * w + x];
+      bin[y * w + x] = v < mean * 0.85 && mean - v > 12 ? 1 : 0;
+    }
+  }
+  return { bin, g };
+}
+
+// Max (max) ou min glissant sur un carré de côté 2r+1, en deux passes (lignes puis colonnes),
+// à coût constant par pixel quel que soit r (van Herk / Gil-Werman)
+function scanRunMax(src, w, h, r, max) {
+  const k = 2 * r + 1, pad = max ? 0 : 255, f = max ? (a, b) => a > b ? a : b : (a, b) => a < b ? a : b;
+  const pass = (s, n, len, at) => {
+    const out = new Uint8Array(s.length), L = len + 2 * r, e = new Uint8Array(L), pre = new Uint8Array(L), suf = new Uint8Array(L);
+    for (let i = 0; i < n; i++) {
+      for (let j = 0; j < L; j++) e[j] = j < r || j >= len + r ? pad : s[at(i, j - r)];
+      for (let j = 0; j < L; j++) pre[j] = j % k ? f(pre[j - 1], e[j]) : e[j];
+      for (let j = L - 1; j >= 0; j--) suf[j] = j % k === k - 1 || j === L - 1 ? e[j] : f(suf[j + 1], e[j]);
+      for (let x = 0; x < len; x++) out[at(i, x)] = f(suf[x], pre[x + 2 * r]);
+    }
+    return out;
+  };
+  return pass(pass(src, h, w, (y, x) => y * w + x), w, h, (x, y) => y * w + x);
+}
+// Seuil d'Otsu d'un histogramme de n valeurs
+function scanOtsu(hist, n) {
+  let sum = 0, sB = 0, wB = 0, best = 0, t = 0;
+  for (let i = 0; i < 256; i++) sum += i * hist[i];
+  for (let i = 0; i < 256; i++) {
+    wB += hist[i]; if (!wB) continue;
+    const wF = n - wB; if (!wF) break;
+    sB += i * hist[i];
+    const d = sB / wB - (sum - sB) / wF, b = wB * wF * d * d;
+    if (b > best) { best = b; t = i; }
+  }
+  return t;
+}
+// Encre foncée sur n'importe quel fond (carton coloré, grandes lettres blanches) : le fond est estimé par
+// une fermeture (max puis min sur un carré) qui efface les traits fins ; l'encre est ce qui est nettement
+// plus sombre que ce fond. Contrairement au seuillage par moyenne, pas de halo autour des grandes lettres claires.
+// g : pour la lecture, l'encre en noir pur, traits épaissis de 2 px : un « 3 » en points, aux bords
+// irréguliers, se lit sinon « 2 » (photo réelle d'une DDM au jet d'encre)
+function scanBinarizeDark(img) {
+  const { width: w, height: h, data: d } = img, n = w * h, v = new Uint8Array(n);
+  for (let i = 0, j = 0; i < n; i++, j += 4) v[i] = Math.max(d[j], d[j + 1], d[j + 2]);   // couleur vive = clair
+  const r = Math.max(4, Math.round(Math.min(w, h) * 0.03));
+  const bg = scanRunMax(scanRunMax(v, w, h, r, true), w, h, r, false), dk = new Uint8Array(n), hist = new Uint32Array(256);
+  for (let i = 0; i < n; i++) { dk[i] = bg[i] - v[i]; hist[dk[i]]++; }
+  const T = Math.max(20, scanOtsu(hist, n)), bin = dk.map(x => x > T ? 1 : 0);
+  return { bin, g: scanDilate(bin, w, h, 2).map(x => x ? 0 : 255) };
+}
+
+// ── Dates imprimées au jet d'encre : des caractères faits de points ──
+// Les points : taille médiane, épaisseur médiane (petit côté, points étirés compris), et écart médian
+// bord à bord avec le plus proche voisin (null = pas assez de points)
+function scanDotStats(bin, w, h) {
+  const unit = Math.min(w, h), { comps } = scanComponents(bin, w, h);
+  const small = comps.filter(c => c.w >= 2 && c.h >= 2 && c.w <= unit * 0.04 && c.h <= unit * 0.04);
+  const ds = small.filter(c => Math.abs(c.w - c.h) <= Math.max(c.w, c.h) * 0.5 && c.area >= c.w * c.h * 0.5).slice(0, 1500);
+  if (ds.length < 20) return null;
+  const med = a => a.sort((x, y) => x - y)[a.length >> 1];
+  const gap = (a, b) => Math.max(0, Math.max(a.x0, b.x0) - Math.min(a.x1, b.x1), Math.max(a.y0, b.y0) - Math.min(a.y1, b.y1));
+  return { size: med(ds.map(c => Math.max(c.w, c.h))),
+           thick: med(small.filter(c => c.area >= c.w * c.h * 0.4).map(c => Math.min(c.w, c.h))),
+           gap: med(ds.map((a, i) => ds.reduce((m, b, j) => j === i ? m : Math.min(m, gap(a, b)), Infinity))) };
+}
+// Dilatation d'un carré de côté 2r+1, en deux passes (lignes puis colonnes)
+function scanDilate(bin, w, h, r) {
+  const pass = (src, n, len, at) => {
+    const out = new Uint8Array(src.length);
+    for (let i = 0; i < n; i++) {
+      let s = 0;
+      for (let k = 0; k < Math.min(r, len); k++) s += src[at(i, k)];
+      for (let k = 0; k < len; k++) {
+        if (k + r < len) s += src[at(i, k + r)];
+        if (k - r - 1 >= 0) s -= src[at(i, k - r - 1)];
+        out[at(i, k)] = +(s > 0);
+      }
+    }
+    return out;
+  };
+  return pass(pass(bin, h, w, (y, x) => y * w + x), w, h, (x, y) => y * w + x);
+}
+// Points reliés en traits pleins. D'abord on efface ce qui est plus fin qu'un point (contour d'une grande
+// lettre imprimée que la date chevauche) : ouverture par le plus grand carré qui tient dans un point.
+// Puis les points sont grossis juste assez pour se toucher, même en diagonale.
+// Renvoie l'image en noir et blanc qui en résulte, null si l'image n'a pas de points.
+function scanJoinDots(bin, w, h) {
+  const st = scanDotStats(bin, w, h);
+  if (!st) return null;
+  const ro = Math.max(0, Math.floor((st.thick / Math.SQRT2 - 1) / 2)), rd = Math.ceil(st.gap * 0.8) + 1;
+  const erode = (b, r) => scanDilate(b.map(v => 1 - v), w, h, r).map(v => 1 - v);
+  const joined = scanDilate(ro ? scanDilate(erode(bin, ro), w, h, ro) : bin, w, h, rd);
+  return { bin: joined, g: joined.map(v => v ? 0 : 255) };
+}
+
+// Composantes connexes (8-voisinage) : chaque caractère devient une boîte
+function scanComponents(bin, w, h) {
+  const lab = new Int32Array(w * h), stack = new Int32Array(w * h), comps = [];
+  for (let i = 0; i < bin.length; i++) {
+    if (!bin[i] || lab[i]) continue;
+    const id = comps.length + 1;
+    let sp = 0, x0 = w, y0 = h, x1 = 0, y1 = 0, area = 0;
+    stack[sp++] = i; lab[i] = id;
+    while (sp) {
+      const p = stack[--sp], px = p % w, py = (p - px) / w;
+      area++;
+      if (px < x0) x0 = px; if (px > x1) x1 = px; if (py < y0) y0 = py; if (py > y1) y1 = py;
+      for (let qy = Math.max(0, py - 1); qy <= Math.min(h - 1, py + 1); qy++)
+        for (let qx = Math.max(0, px - 1); qx <= Math.min(w - 1, px + 1); qx++) {
+          const q = qy * w + qx;
+          if (bin[q] && !lab[q]) { lab[q] = id; stack[sp++] = q; }
+        }
+    }
+    comps.push({ id, x0, y0, x1: x1 + 1, y1: y1 + 1, w: x1 - x0 + 1, h: y1 - y0 + 1, area });
+  }
+  return { lab, comps };
+}
+
+// Zones des QR codes : trois repères (carré creux avec un carré plein au centre)
+// de même taille, proches. Leurs modules ne doivent pas se mêler au texte.
+function scanQRZones(comps) {
+  const fp = comps.filter(r => {
+    if (r.w < 12 || Math.abs(r.w - r.h) > Math.max(r.w, r.h) * 0.25) return false;
+    const fill = r.area / (r.w * r.h);
+    if (fill < 0.3 || fill > 0.7) return false;
+    const cx = (r.x0 + r.x1) / 2, cy = (r.y0 + r.y1) / 2;
+    return comps.some(s => s !== r && s.w > r.w * 0.3 && s.w < r.w * 0.6 && s.area > s.w * s.h * 0.7 &&
+      Math.abs((s.x0 + s.x1) / 2 - cx) < r.w * 0.12 && Math.abs((s.y0 + s.y1) / 2 - cy) < r.h * 0.12);
+  });
+  const zones = [];
+  fp.forEach(a => {
+    const ax = (a.x0 + a.x1) / 2, ay = (a.y0 + a.y1) / 2;
+    if (zones.some(z => ax > z.x0 && ax < z.x1 && ay > z.y0 && ay < z.y1)) return; // QR déjà trouvé
+    const grp = fp.filter(b => b.w > a.w * 0.75 && b.w < a.w * 1.33 && Math.hypot(b.x0 - a.x0, b.y0 - a.y0) < a.w * 6);
+    if (grp.length < 3) return;
+    const m = a.w / 7 * 2;                                              // + 2 modules autour
+    zones.push({ x0: Math.min(...grp.map(b => b.x0)) - m, y0: Math.min(...grp.map(b => b.y0)) - m,
+                 x1: Math.max(...grp.map(b => b.x1)) + m, y1: Math.max(...grp.map(b => b.y1)) + m });
+  });
+  return zones;
+}
+
+// Regroupe les caractères en lignes. Le trait vertical des étiquettes Pick
+// générées par l'appli sert de séparateur : rien ne le traverse.
+// minGlyph : hauteur minimale d'un caractère, en part du petit côté de l'image
+// same : rapport de hauteur minimal entre deux caractères d'une ligne (0,5 pour un texte en minuscules)
+// gapMax : écart maximal entre deux caractères d'une ligne, en hauteurs de caractère
+function scanLines(comps, w, h, minGlyph, qz = scanQRZones(comps), same = 0.65, gapMax = 1) {
+  const unit = Math.min(w, h), bars = [], cs = [];
+  comps.forEach(c => {
+    if (Math.max(c.w, c.h) < unit * minGlyph * 0.5) return;            // poussière
+    const ccx = (c.x0 + c.x1) / 2, ccy = (c.y0 + c.y1) / 2;
+    if (qz.some(z => ccx > z.x0 && ccx < z.x1 && ccy > z.y0 && ccy < z.y1)) return; // QR code
+    const border = c.x0 <= 1 || c.y0 <= 1 || c.x1 >= w - 1 || c.y1 >= h - 1;
+    if (c.h > unit * 0.35 && c.h > c.w * 6) { if (!border) bars.push(c); return; } // trait vertical
+    if (border || c.h > unit * 0.8 || c.w > w * 0.5) return;           // bord d'étiquette, fond
+    c.flat = c.w >= c.h * 1.6 && c.area >= c.w * c.h * 0.4;            // tiret possible, même penché
+    cs.push(c);
+  });
+  const barBetween = (a, b) => bars.some(br => {
+    const bx = (br.x0 + br.x1) / 2;
+    return bx > Math.min(a.x1, b.x1) && bx < Math.max(a.x0, b.x0) && br.y0 < Math.max(a.y1, b.y1) && br.y1 > Math.min(a.y0, b.y0);
+  });
+  const parent = cs.map((_, i) => i);
+  const find = i => parent[i] === i ? i : (parent[i] = find(parent[i]));
+  for (let i = 0; i < cs.length; i++) for (let j = i + 1; j < cs.length; j++) {
+    let a = cs[i], b = cs[j];
+    if (b.h > a.h) [a, b] = [b, a];                                    // a : le plus haut
+    const gap = Math.max(a.x0, b.x0) - Math.min(a.x1, b.x1);
+    const ov = Math.min(a.y1, b.y1) - Math.max(a.y0, b.y0), cy = (b.y0 + b.y1) / 2;
+    // deux caractères de même taille côte à côte, ou un tiret centré à côté d'un caractère
+    const glyph = b.h >= a.h * same && ov >= b.h * 0.5 && gap <= a.h * gapMax;
+    const dash = b.flat && b.h <= a.h * 0.5 && b.h >= a.h * 0.08 && b.w >= a.h * 0.25 && b.w <= a.h * 1.5 &&
+                 cy > a.y0 + a.h * 0.2 && cy < a.y1 - a.h * 0.2 && gap <= a.h * 0.9;
+    if ((glyph || dash) && !barBetween(a, b)) parent[find(j)] = find(i);
+  }
+  const groups = new Map();
+  cs.forEach((c, i) => { const r = find(i); (groups.get(r) || groups.set(r, []).get(r)).push(c); });
+  const lines = [];
+  groups.forEach(gr => {
+    const H = Math.max(...gr.map(c => c.h));
+    if (H < unit * minGlyph || (gr.length === 1 && gr[0].flat)) return; // ni caractère, ni tiret seul
+    const thin = gr.filter(c => c.w < c.h * 0.15).length;
+    if (thin >= 6 && thin * 2 > gr.length) return;                      // barres d'un code-barres
+    const hs = gr.filter(c => c.h >= H * 0.5).map(c => c.h).sort((a, b) => a - b);
+    lines.push({ comps: gr, n: hs.length, h: hs[hs.length >> 1],
+      x0: Math.min(...gr.map(c => c.x0)), y0: Math.min(...gr.map(c => c.y0)),
+      x1: Math.max(...gr.map(c => c.x1)), y1: Math.max(...gr.map(c => c.y1)) });
+  });
+  return lines;
+}
+
+// Image propre d'une ligne : ses caractères en niveaux de gris (bords lissés),
+// tout le reste effacé, contraste étiré, hauteur normalisée pour Tesseract
+function scanLineCanvas(line, lab, g, w, targetH) {
+  const mark = new Uint8Array(Math.max(...line.comps.map(c => c.id)) + 1);
+  line.comps.forEach(c => mark[c.id] = 1);
+  const pad = Math.round(line.h * 0.15);
+  const bx0 = Math.max(0, line.x0 - pad), by0 = Math.max(0, line.y0 - pad);
+  const bw = Math.min(w, line.x1 + pad) - bx0, bh = Math.min(lab.length / w, line.y1 + pad) - by0;
+  const at = (x, y) => (by0 + y) * w + bx0 + x;
+  // le fond n'est gardé qu'au ras des caractères : masque dilaté de r (deux passes)
+  const r = Math.max(1, Math.round(line.h * 0.06)), row = new Uint8Array(bw * bh), near = new Uint8Array(bw * bh);
+  let ink = 0, ni = 0, paper = 0, np = 0;
+  for (let y = 0; y < bh; y++) for (let x = 0; x < bw; x++) {
+    const p = at(x, y);
+    if (mark[lab[p]]) { ink += g[p]; ni++; for (let xx = Math.max(0, x - r); xx <= Math.min(bw - 1, x + r); xx++) row[y * bw + xx] = 1; }
+    else if (!lab[p]) { paper += g[p]; np++; }
+  }
+  for (let y = 0; y < bh; y++) for (let x = 0; x < bw; x++)
+    if (row[y * bw + x]) for (let yy = Math.max(0, y - r); yy <= Math.min(bh - 1, y + r); yy++) near[yy * bw + x] = 1;
+  ink = ni ? ink / ni : 0; paper = np ? paper / np : 255;
+  const k = 255 / Math.max(1, paper - ink);
+  const src = document.createElement('canvas'); src.width = bw; src.height = bh;
+  const sctx = src.getContext('2d'), id = sctx.createImageData(bw, bh), d = id.data;
+  for (let y = 0; y < bh; y++) for (let x = 0; x < bw; x++) {
+    const p = at(x, y), l = lab[p], o = (y * bw + x) * 4;
+    const keep = l ? mark[l] : near[y * bw + x];
+    d[o] = d[o + 1] = d[o + 2] = keep ? Math.max(0, Math.min(255, (g[p] - ink) * k)) : 255;
+    d[o + 3] = 255;
+  }
+  sctx.putImageData(id, 0, 0);
+  const s = targetH / line.h, m = Math.round(targetH * 0.4);
+  const out = document.createElement('canvas');
+  out.width = Math.round(bw * s) + m * 2; out.height = Math.round(bh * s) + m * 2;
+  const ctx = out.getContext('2d');
+  ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, out.width, out.height);
+  ctx.imageSmoothingQuality = 'high';
+  ctx.drawImage(src, m, m, out.width - m * 2, out.height - m * 2);
+  return out;
+}
+
+// ── Lecture d'une étiquette de localisation, toutes zones ──
+// · étiquette d'origine : « CH-O-073 » en petit, « 12-6 » en grand dessous
+// · étiquette Pick de l'appli : « AM-C » sur « 12 », un QR code (un trait en Chill), « 03-4 » en grand
+// · étiquette Repl de l'appli : un QR code et « AM-C-012-03-4 » sur une ligne
+// Le préfixe donne la zone ; l'allée, le rayon et la section doivent exister dans CFG.
+// Caractères que la lecture confond, le plus probable en premier après lui-même
+const SCAN_FZ = { '0':'0ODQ', O:'O0QD', Q:'Q0O', D:'D0O', '1':'1IL', I:'I1L', L:'L1I', '8':'8B', B:'B8', '5':'5S', S:'S5',
+  '6':'6G', G:'G6', '2':'2Z', Z:'Z2', '4':'4A', A:'A4', M:'MN', N:'NMH', H:'HN', E:'EF', F:'FE', R:'RP', P:'PR' };
+const SCAN_N = '[0-9ODQILSBZGA]';                                   // un chiffre, ou ce qui y ressemble
+const scanFz = s => [...s].map(c => c === '-' ? '-?' : `[${SCAN_FZ[c] || c}]`).join('');
+const scanDigits = s => s.replace(/[ODQ]/g, '0').replace(/[IL]/g, '1').replace(/S/g, '5').replace(/B/g, '8')
+  .replace(/Z/g, '2').replace(/G/g, '6').replace(/A/g, '4');
+// Rayon et section valides de la zone : « 12-6 », « 126 », « 05-3 »… → [rayon, section]
+function scanRS(t, L) {
+  t = scanDigits(t).replace(/[^0-9-]/g, '');
+  const m = t.match(/(\d{1,3})-(\d)$/) || t.replace(/-/g, '').match(/^(\d{1,3})(\d)$/);
+  if (!m) return null;
+  const r = String(parseInt(m[1].slice(-2), 10)), sec = String(parseInt(m[2], 10));
+  return L.rayons.includes(r) && L.sections.includes(sec) ? [r, sec] : null;
+}
+const scanEtag = t => { const e = parseInt(scanDigits(t), 10); return e >= 1 && e <= 200 ? String(e) : null; };
+// En-tête « AM-0-ERG-B-012 », « CH-O », « FR-C-001-01-1 »… : la meilleure lecture, toutes zones et allées confondues
+function scanHead(t) {
+  let best = null;
+  ZONES.forEach(z => CFG.zones[z].loc.allees.forEach(a => {
+    const m = t.match(new RegExp(`${scanFz(CFG.zones[z].prefix)}-?(${scanFz(a)})(?:-?(${SCAN_N}{1,3}))?(?:-(${SCAN_N}{1,3}-${SCAN_N}))?`));
+    if (!m) return;
+    // ressemblance de l'allée lue : identique 3, confusion la plus courante 2, autre confusion 1
+    const read = m[1].replace(/-/g, ''), want = a.replace(/-/g, '');
+    const score = [...want].reduce((n, c, i) => n + (read[i] === c ? 3 : (SCAN_FZ[read[i]] || '')[1] === c ? 2 : 1), 0);
+    const cand = { zone: z, allee: a, m, len: m[0].length, score };
+    if (!best || cand.len > best.len || (cand.len === best.len && cand.score > best.score)) best = cand;
+  }));
+  return best;
+}
+// Code complet exact, tel que dans les QR codes de l'appli → résultat, ou null
+function scanParseCode(text) {
+  for (const z of ZONES) {
+    const c = CFG.zones[z], m = (text || '').trim().match(new RegExp(`^${c.prefix}-(.+)-(\\d{3})-(\\d{2})-(\\d)$`));
+    if (!m) continue;
+    const etag = scanEtag(m[2]), rs = scanRS(m[3] + '-' + m[4], c.loc);
+    if (c.loc.allees.includes(m[1]) && etag && rs) return { zone: z, allee: m[1], etag, rayon: rs[0], section: rs[1], used: [] };
+  }
+  return null;
+}
+// lines : [{text, h, x0, y0, x1, y1}] → {zone, allee, etag, rayon, section} (null si illisible)
+// + used : les lignes retenues, dans l'ordre de l'étiquette
+function scanParse(lines) {
+  const norm = s => (s || '').toUpperCase().replace(/[–—_~=]/g, '-').replace(/[^A-Z0-9-]/g, '').replace(/-+/g, '-');
+  const res = { zone: null, allee: null, etag: null, rayon: null, section: null, used: [] };
+  const ls = lines.map(l => ({ l, t: norm(l.text) })).filter(x => /[A-Z0-9]/.test(x.t))
+    .sort((a, b) => a.l.y0 - b.l.y0 || a.l.x0 - b.l.x0);
+  let hd = null;
+  for (const x of ls) { const h = scanHead(x.t); if (h) { hd = { ...h, l: x.l }; break; } }
+  if (!hd) return res;                                  // sans en-tête, ni zone ni allée : on attend
+  const L = CFG.zones[hd.zone].loc;
+  res.zone = hd.zone; res.allee = hd.allee; res.used.push(hd.l);
+  if (hd.m[2]) res.etag = scanEtag(hd.m[2]);
+  const r = hd.m[3] && scanRS(hd.m[3], L);
+  if (r) [res.rayon, res.section] = r;
+  const others = ls.filter(x => x.l !== hd.l), H = hd.l.h;
+  const cx = l => (l.x0 + l.x1) / 2, cy = l => (l.y0 + l.y1) / 2;
+  const dx = (a, b) => Math.max(0, a.x0 - b.x1, b.x0 - a.x1), dy = (a, b) => Math.max(0, a.y0 - b.y1, b.y0 - a.y1);
+  // rayon-section : en grand, sous l'en-tête, ou à sa droite après le trait ou le QR code
+  let big = null;
+  if (!res.rayon) {
+    const c = others.filter(x => scanRS(x.t, L) && x.l.h >= H * 1.25 && dy(x.l, hd.l) <= H * 2 && dx(x.l, hd.l) <= H * 8);
+    const hmax = Math.max(0, ...c.map(x => x.l.h));
+    big = c.filter(x => x.l.h >= hmax * 0.75).sort((a, b) => dx(a.l, hd.l) + dy(a.l, hd.l) - dx(b.l, hd.l) - dy(b.l, hd.l))[0];
+    if (big) [res.rayon, res.section] = scanRS(big.t, L);
+  }
+  // étagère seule sous l'en-tête (étiquette Pick de l'appli)
+  if (!res.etag) {
+    const c = others.filter(x => x !== big && new RegExp(`^${SCAN_N}{1,3}$`).test(x.t) && scanEtag(x.t) &&
+      cy(x.l) > cy(hd.l) && Math.abs(cx(x.l) - cx(hd.l)) < (hd.l.x1 - hd.l.x0) * 0.75 && dy(x.l, hd.l) <= H * 2)
+      .sort((a, b) => dy(a.l, hd.l) - dy(b.l, hd.l));
+    if (c[0]) { res.etag = scanEtag(c[0].t); res.used.push(c[0].l); }
+  }
+  if (big) res.used.push(big.l);
+  return res;
+}
+const scanComplete = res => !!(res.zone && res.allee && res.etag && res.rayon && res.section);
+const scanCodeOf = res => `${CFG.zones[res.zone].prefix}-${res.allee}-${pad(res.etag, 3)}-${pad(res.rayon, 2)}-${res.section}`;
+
+// Code RC (RC-5XXXXXXX) ou Overflow (OF-XXXXXXXX), 8 chiffres, lu en clair ou dans un code
+// → {serie (RC), num} si le numéro existe dans CFG, sinon null
+function scanParseNum(text, mode) {
+  const t = (text || '').toUpperCase().replace(/[–—_~=]/g, '-').replace(/[^A-Z0-9-]/g, '');
+  const m = t.match(new RegExp(`${mode === 'RC' ? 'R[C0O]' : '[O0Q][FE]'}-?(${SCAN_N}{8})(?!${SCAN_N})`));
+  if (!m) return null;
+  const d = scanDigits(m[1]);
+  if (mode === 'RC') {
+    const n = parseInt(d.slice(1), 10);
+    return CFG.rc.series.some(x => x.value === d[0]) && n >= CFG.rc.min && n <= CFG.rc.max ? { serie: d[0], num: String(n) } : null;
+  }
+  const n = parseInt(d, 10);
+  return n >= CFG.overflow.min && n <= CFG.overflow.max ? { num: String(n) } : null;
+}
+// Lignes lues → code : une ligne seule, sinon toutes bout à bout (« RC-5000 1234 », « CHILLED / NPL »)
+function scanTextLines(lines, parse) {
+  const ls = lines.filter(l => l.text).sort((a, b) => a.y0 - b.y0 || a.x0 - b.x0);
+  for (const l of ls) { const r = parse(l.text); if (r) return { ...r, used: [l] }; }
+  const r = parse(ls.map(l => l.text).join(''));
+  return r ? { ...r, used: ls } : { used: [] };
+}
+function scanNumFill(mode, res) {
+  if (!res.num) return false;
+  if (!$('section-' + mode).classList.contains('active')) switchZone(mode);
+  if (mode === 'RC') { $('RC-serie').value = res.serie; $('RC-num').value = res.num; updateRC(); }
+  else { $('OF-num').value = res.num; updateOverflow(); }
+  scanClose();
+  toast('Lu : ' + (mode === 'RC' ? rcCode() : overflowCode()));
+  return true;
+}
+
+// Code Buffer, toutes zones : <P>-BUF-NN-EEE-RR[-1] (étagère) ou <P>-PALLET-NN-NN
+// → {zone, type, …} si chaque valeur existe dans la config de la zone, sinon null
+function scanParseBuf(text) {
+  const t = (text || '').toUpperCase().replace(/[–—_~=]/g, '-').replace(/[^A-Z0-9-]/g, '').replace(/-+/g, '-');
+  const N = SCAN_N, num = v => String(parseInt(scanDigits(v), 10));
+  for (const z of ZONES) {
+    const b = CFG.zones[z].buf, P = scanFz(CFG.zones[z].prefix);
+    let m = t.match(new RegExp(`${P}-?${scanFz('BUF')}-?(${N}{2})-?(${N}{3})-?(${N}{2})(?:-(${N}))?(?!${N})`));
+    if (m) {
+      const r = { zone: z, type: 'etag', xx1: num(m[1]), xxx: num(m[2]), xx2: num(m[3]), sfx: !!m[4] };
+      if (b.etag.xx1.includes(r.xx1) && b.etag.xxx.includes(r.xxx) && b.etag.xx2.includes(r.xx2) && (!m[4] || num(m[4]) === '1')) return r;
+    }
+    m = b.pallet && t.match(new RegExp(`${P}-?${scanFz('PALLET')}-?(${N}{2})-?(${N}{2})(?!${N})`));
+    if (m) {
+      const r = { zone: z, type: 'pallet', pxx1: num(m[1]), pxx2: num(m[2]) };
+      if (b.pallet.xx1.includes(r.pxx1) && b.pallet.xx2.includes(r.pxx2)) return r;
+    }
+  }
+  return null;
+}
+const scanBufKey = r => !r.zone ? '' : r.type === 'pallet'
+  ? `${CFG.zones[r.zone].prefix}-PALLET-${pad(r.pxx1, 2)}-${pad(r.pxx2, 2)}`
+  : `${CFG.zones[r.zone].prefix}-BUF-${pad(r.xx1, 2)}-${pad(r.xxx, 3)}-${pad(r.xx2, 2)}${r.sfx ? '-1' : ''}`;
+
+// Code NPL (AMBIENTNPL…), à une lettre près : ils sont assez différents pour ne pas se confondre
+function scanParseNpl(text) {
+  const t = (text || '').toUpperCase().replace(/[^A-Z0-9]/g, '');
+  for (const z of ZONES) {
+    const npl = CFG.zones[z].npl;
+    for (let i = 0; i + npl.length <= t.length; i++) {
+      let bad = 0;
+      for (let j = 0; j < npl.length && bad < 2; j++) if (t[i + j] !== npl[j] && !(SCAN_FZ[t[i + j]] || '').includes(npl[j])) bad++;
+      if (bad < 2) return { zone: z, npl };
+    }
+  }
+  return null;
+}
+
+// Code Put : <P>-PUT-<n>-<lettre> (toutes zones), ou court « 1L » / « 1-L » (« PUT 1L ») pour
+// la zone here ; here = '*' : la zone dont c'est la lettre, si une seule convient.
+// Numéro et lettre doivent exister dans la config de la zone.
+function scanParsePut(text, here) {
+  const t = (text || '').toUpperCase().replace(/[–—_~=]/g, '-').replace(/[^A-Z0-9-]/g, '').replace(/-+/g, '-');
+  const pick = (z, n, l) => {
+    const put = CFG.zones[z].put, x = String(parseInt(scanDigits(n), 10));
+    // la lettre telle quelle, sinon sa confusion la plus probable (0 → O, 8 → B…)
+    const lt = [...(SCAN_FZ[l] || l)].find(c => put.lettres.includes(c));
+    return put.x.includes(x) && lt ? { zone: z, x, lettre: lt } : null;
+  };
+  for (const z of ZONES) {
+    const m = t.match(new RegExp(`${scanFz(CFG.zones[z].prefix)}-?${scanFz('PUT')}-?(${SCAN_N})-?([A-Z0-9])(?![A-Z0-9])`));
+    const r = m && pick(z, m[1], m[2]);
+    if (r) return r;
+  }
+  const m = (here === '*' || CFG.zones[here]) && t.match(new RegExp(`^(?:${scanFz('PUT')}-?)?(${SCAN_N})-?([A-Z0-9])$`));
+  if (!m) return null;
+  const found = (here === '*' ? ZONES : [here]).map(z => pick(z, m[1], m[2])).filter(Boolean);
+  return found.length === 1 ? found[0] : null;
+}
+const scanHere = () => scan.slot.split('-')[0];                     // zone du formulaire qui scanne
+function scanPutFill(r) {
+  if (!r.zone) return false;
+  const p = CFG.zones[r.zone].prefix;
+  scanShowZone(r.zone, 'put');
+  $(p + '-put-x').value = r.x; $(p + '-put-lettre').value = r.lettre;
+  updatePut(r.zone);
+  toast('Lu : ' + putCode(r.zone));
+  return true;
+}
+// Localisation lue depuis le formulaire d'une zone : seulement complète
+function scanLocFill(r) {
+  if (!scanComplete(r)) return false;
+  const z = r.zone, p = CFG.zones[z].prefix;
+  scanShowZone(z, 'loc');
+  $(p + '-allee').value = r.allee; $(p + '-etag').value = r.etag; $(p + '-rayon').value = r.rayon; $(p + '-section').value = r.section;
+  updateLoc(z);
+  toast('Lu : ' + locCode(z));
+  return true;
+}
+
+// Buffer / NPL lu : la zone de l'étiquette s'ouvre sur ce formulaire, rempli
+function scanShowZone(z, mode) {
+  scanClose();
+  if (!$('section-' + z).classList.contains('active')) switchZone(z);
+  switchMode(z, mode, $('section-' + z).querySelector(`.mode-btn[data-mode="${mode}"]`));
+}
+function scanBufFill(r) {
+  if (!r.zone) return false;
+  const z = r.zone, p = CFG.zones[z].prefix, tb = $(z + '-buf').querySelectorAll('.buf-btn');
+  scanShowZone(z, 'buf');
+  if (tb.length) switchBuf(z, r.type, tb[r.type === 'pallet' ? 1 : 0]);
+  if (r.type === 'pallet') { $(p + '-buf-pxx1').value = r.pxx1; $(p + '-buf-pxx2').value = r.pxx2; }
+  else {
+    $(p + '-buf-xx1').value = r.xx1; $(p + '-buf-xxx').value = r.xxx; $(p + '-buf-xx2').value = r.xx2;
+    if (bufSuffix[z] !== r.sfx) toggleBufSuffix(z, $(z + '-buf-etag').querySelector('.suffix-btn'));
+  }
+  updateBuf(z);
+  toast('Lu : ' + bufCode(z, r.type));
+  return true;
+}
+function scanNplFill(r) {
+  if (!r.zone) return false;
+  scanShowZone(r.zone, 'npl');
+  toast('Lu : ' + r.npl);
+  return true;
+}
+// Consolidation : « CONSOLIDATION », « DIRECT CONSO » ou « CONSO », en majuscules, minuscules
+// ou mélangées → onglet Consolidation
+function scanParseConso(text) {
+  return new RegExp(scanFz('CONSO')).test((text || '').toUpperCase().replace(/[^A-Z0-9]/g, '')) ? { conso: true } : null;
+}
+function scanConsoFill(r) {
+  if (!r.conso) return false;
+  switchZone('CONSOLIDATION');
+  toast('Lu : CONSOLIDATION');
+  return true;
+}
+
+// Ce que cherche chaque scanner : caractères possibles, lecture du texte, lecture d'un code,
+// code complet (vide sinon), et ce qu'on fait du résultat
+const scanLetters = s => [...new Set(s)].join('');
+const SCAN_LOC_CHARS = scanLetters(ZONES.map(z => CFG.zones[z].prefix + CFG.zones[z].loc.allees.join('')).join('') + 'N0123456789-');
+const SCAN_READERS = {
+  ZLOC: {
+    hint: 'Cadrez l\'étiquette dans le rectangle', chars: SCAN_LOC_CHARS,
+    parse: scanParse, code: scanParseCode, key: r => scanComplete(r) ? scanCodeOf(r) : '', fill: scanLocFill,
+  },
+  PUT: {
+    hint: 'Cadrez la Put section dans le rectangle',
+    chars: scanLetters(ZONES.map(z => CFG.zones[z].prefix + CFG.zones[z].put.lettres.join('')).join('') + 'PUT0123456789-'),
+    parse: l => scanTextLines(l, t => scanParsePut(t, scanHere())), code: t => scanParsePut(t, scanHere()),
+    key: r => r.zone ? `${CFG.zones[r.zone].prefix}-PUT-${r.x}-${r.lettre}` : '', fill: scanPutFill,
+  },
+  RC: {
+    hint: 'Cadrez le code RC dans le rectangle', chars: 'RC0123456789-',
+    parse: l => scanTextLines(l, t => scanParseNum(t, 'RC')), code: t => scanParseNum(t, 'RC'),
+    key: r => r.num ? 'RC-' + r.serie + pad(r.num, 7) : '', fill: r => scanNumFill('RC', r),
+  },
+  OVERFLOW: {
+    hint: 'Cadrez le code OF dans le rectangle', chars: 'OF0123456789-',
+    parse: l => scanTextLines(l, t => scanParseNum(t, 'OVERFLOW')), code: t => scanParseNum(t, 'OVERFLOW'),
+    key: r => r.num ? 'OF-' + pad(r.num, 8) : '', fill: r => scanNumFill('OVERFLOW', r),
+  },
+  BUF: {
+    hint: 'Cadrez le code Buffer dans le rectangle',
+    chars: scanLetters(ZONES.map(z => CFG.zones[z].prefix).join('') + 'BUFPALLET0123456789-'),
+    parse: l => scanTextLines(l, scanParseBuf), code: scanParseBuf, key: scanBufKey, fill: scanBufFill,
+  },
+  NPL: {
+    hint: 'Cadrez l\'étiquette NPL dans le rectangle',             // « Chilled NPL » se lit aussi
+    chars: scanLetters(ZONES.map(z => CFG.zones[z].npl + CFG.zones[z].npl.toLowerCase()).join('')),
+    parse: l => scanTextLines(l, scanParseNpl), code: scanParseNpl, key: r => r.npl || '', fill: scanNplFill,
+  },
+  CONSO: {
+    hint: 'Cadrez l\'étiquette dans le rectangle', chars: 'CONSOLIDATIREconsolidatire',
+    parse: l => scanTextLines(l, scanParseConso), code: scanParseConso,
+    key: r => r.conso ? 'CONSOLIDATION' : '', fill: scanConsoFill,
+  },
+};
+// Libre : le texte de l'étiquette tel quel, ou le contenu de son code, pour en faire un QR code
+const SCAN_TXT_CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-./:#+&() '; // espace : sinon les mots se collent
+function scanParseText(text) {
+  const t = (text || '').replace(/[–—]/g, '-').replace(/[^A-Za-z0-9\-./:#+&() ]/g, '').replace(/\s+/g, ' ').trim().toUpperCase();
+  return t.replace(/[^A-Z0-9]/g, '').length >= 2 ? { text: t } : null;
+}
+// Espaces entre les mots d'après les écarts entre caractères (Tesseract en oublie quand le texte est
+// petit) : seulement si chaque caractère lu correspond à un élément de la ligne
+function scanSpaced(l) {
+  const chars = l.text.replace(/ /g, ''), cs = l.comps.slice().sort((a, b) => a.x0 - b.x0);
+  if (chars.length !== cs.length || cs.length < 3) return l.text;
+  const gaps = cs.slice(1).map((c, i) => c.x0 - cs[i].x1), med = gaps.slice().sort((a, b) => a - b)[gaps.length >> 1];
+  return [...chars].map((ch, i) => (i && gaps[i - 1] > l.h * 0.45 && gaps[i - 1] > med * 2 ? ' ' : '') + ch).join('');
+}
+// Lignes lues → texte, rangée par rangée de gauche à droite. Les traces isolées (bord d'étiquette,
+// reflet) ne forment qu'un seul élément : une ligne en garde au moins deux, sauf caractère très net.
+function scanTextFinal(read) {
+  const rows = [];
+  read.filter(l => l.text && (l.n >= 2 || l.conf >= 80)).sort((a, b) => (a.y0 + a.y1) - (b.y0 + b.y1)).forEach(l => {
+    const cy = (l.y0 + l.y1) / 2, row = rows.find(r => Math.abs(r.cy - cy) < Math.min(r.h, l.h) * 0.5);
+    if (row) row.ls.push(l); else rows.push({ cy, h: l.h, ls: [l] });
+  });
+  const used = rows.flatMap(r => r.ls.sort((a, b) => a.x0 - b.x0));
+  const r = scanParseText(used.map(scanSpaced).join(' '));
+  return r ? { ...r, used } : null;
+}
+function scanTextFill(r) {
+  if (!r.text) return false;
+  $('LIBRE-text').value = r.text;
+  updateLibre();
+  scanClose();
+  toast('Lu : ' + r.text);
+  return true;
+}
+SCAN_READERS.LIBRE = {
+  hint: 'Cadrez le texte dans le rectangle', chars: SCAN_TXT_CHARS, vote: true, mixed: true,
+  parse: () => ({ used: [] }), final: read => scanTextFinal(read),         // tout le texte, pas d'arrêt anticipé
+  code: t => t && t.trim() ? { text: t.trim().toUpperCase() } : null,
+  key: r => r.text || '', fill: scanTextFill,
+};
+
+// Onglet 📷 : tous les types. Un code complet (RC, OF, Buffer, Put, NPL, Consolidation) sur une ligne l'emporte,
+// puis une localisation complète ; un Put court (« 1L ») seulement en dernier recours, s'il est
+// seul sur l'étiquette : le « 1-8 » d'une localisation Frozen n'est pas un Put « 1-B ».
+const SCAN_TYPES = { rc: 'RC', of: 'OVERFLOW', buf: 'BUF', put: 'PUT', npl: 'NPL', conso: 'CONSO', loc: 'ZLOC' };
+function scanParseAny(lines) {
+  for (const [type, f] of [['rc', t => scanParseNum(t, 'RC')], ['of', t => scanParseNum(t, 'OVERFLOW')], ['buf', scanParseBuf],
+                           ['put', t => scanParsePut(t)], ['npl', scanParseNpl], ['conso', scanParseConso]]) {
+    const r = scanTextLines(lines, f);
+    if (r.used.length) return { ...r, kind: type };
+  }
+  const r = scanParse(lines);
+  return scanComplete(r) ? { ...r, kind: 'loc' } : { used: [] };
+}
+function scanCodeAny(text) {
+  for (const [type, f] of [['loc', scanParseCode], ['put', t => scanParsePut(t)], ['buf', scanParseBuf], ['npl', scanParseNpl],
+                           ['rc', t => scanParseNum(t, 'RC')], ['of', t => scanParseNum(t, 'OVERFLOW')], ['conso', scanParseConso]]) {
+    const r = f(text);
+    if (r) return { ...r, kind: type };
+  }
+  return null;
+}
+SCAN_READERS.ANY = {
+  hint: 'Cadrez l\'étiquette dans le rectangle',
+  chars: scanLetters(['ZLOC', 'PUT', 'BUF', 'NPL', 'CONSO', 'RC', 'OVERFLOW'].map(k => SCAN_READERS[k].chars).join('')),
+  parse: scanParseAny, code: scanCodeAny,
+  key: r => r.kind ? SCAN_READERS[SCAN_TYPES[r.kind]].key(r) : '',
+  fill: r => !!r.kind && SCAN_READERS[SCAN_TYPES[r.kind]].fill(r),
+  // toutes les lignes lues sans rien de complet : un Put court, seul texte de l'étiquette ?
+  final: (read, lines) => {
+    const r = scanTextLines(read, t => scanParsePut(t, '*'));
+    return r.used.length === 1 && !lines.some(l => l !== r.used[0] && l.n >= 3) ? { ...r, kind: 'put' } : null;
+  },
+};
+// ── Lecture d'une date de produit (onglet 📷, mode 📅) ──
+// DLC / DDM telle qu'imprimée : 25/10/2026, 25.10.26, 25-10, 25 10 2026, 25 OCT 2026, 25OCT26,
+// et « 10/2026 » (DDM : fin du mois). Sans année : celle qui met la date au plus près d'aujourd'hui.
+// Plusieurs dates (emballé le… / à consommer jusqu'au…) : la plus tardive, une date avec année d'abord.
+// Pas de (?<!…) dans ces expressions : Safari avant iOS 16.4 refuserait tout le script.
+const scanMois = m => m === 'JUIN' ? 6 : m === 'JUIL' ? 7
+  : { JAN:1, FEV:2, FEB:2, MAR:3, AVR:4, APR:4, MAI:5, MAY:5, JUN:6, JUL:7, AOU:8, AUG:8, SEP:9, OCT:10, NOV:11, DEC:12 }[m.slice(0, 3)];
+function scanParseDate(text) {
+  // chiffres lus comme des lettres (« 2S/1O/26 », « 30 O1 2U27 ») : seulement dans ce qui a la forme d'une date,
+  // si chaque groupe a un vrai chiffre (« DU 25 10 » reste tel quel), ou s'il y en a au moins 5
+  const D = '[0-9ODQUILSBZG]', fix = (all, p, w) => p + (w.split(/[\s./-]+/).every(x => /[0-9]/.test(x)) ||
+    (w.match(/[0-9]/g) || []).length >= 5 ? scanDigits(w.replace(/U/g, '0')) : w);
+  const t = (text || '').toUpperCase()
+    .replace(new RegExp(`(^|[^A-Z0-9])(${D}+(?:\\s?[./-]\\s?${D}+){1,2})(?![A-Z])`, 'g'), fix)
+    .replace(new RegExp(`(^|[^A-Z0-9])(${D}{2}\\s{1,3}${D}{2}\\s{1,3}(?:${D}{4}|${D}{2}))(?![A-Z0-9])`, 'g'), fix);
+  const today = dayAdd(new Date(), 0), found = [];
+  const add = (d, m, y) => {
+    d = +d; m = +m;
+    const at = y => new Date(y, m - 1, d), Y = today.getFullYear();
+    const dt = y ? at(+y < 100 ? 2000 + +y : +y)
+      : [Y - 1, Y, Y + 1].map(at).sort((a, b) => Math.abs(a - today) - Math.abs(b - today))[0];
+    if (m < 1 || m > 12 || dt.getMonth() !== m - 1 || dt.getDate() !== d) return;   // 31/02, 25/13…
+    const days = (dt - today) / 864e5;
+    if (days > -400 && days < 1100) found.push({ dt, y: !!y });
+  };
+  for (const m of t.matchAll(/(?:^|[^0-9])([0-3]?[0-9])\s?([./-])\s?([01]?[0-9])(?:\s?\2\s?((?:20)?[0-9]{2}))?(?![0-9])/g)) add(m[1], m[3], m[4]);
+  // jj mm aaaa : espaces (jet d'encre), ou séparateurs mélangés quand la lecture en perd un (« 30 10.2026 »)
+  const SEP = '(?:\\s{1,3}|\\s?[./-]\\s?)';
+  for (const m of t.matchAll(new RegExp(`(?:^|[^0-9])([0-3][0-9])${SEP}([01][0-9])${SEP}((?:20)?[0-9]{2})(?![0-9])`, 'g'))) add(m[1], m[2], m[3]);
+  for (const m of t.matchAll(/(?:^|[^0-9])([0-3]?[0-9])\s?(JANV?|FEVR?|FEB|MARS?|AVR|APR|MAI|MAY|JUIN|JUIL|JUN|JUL|AOUT?|AUG|SEPT?|OCT|NOV|DEC)[A-Z]*\.?\s?((?:20)?[0-9]{2})?(?![0-9])/g))
+    add(m[1], scanMois(m[2]), m[3]);
+  // mm/aaaa (DDM), pas après un nombre : « 30 10.2026 » est un jour, pas « fin octobre »
+  if (!found.length) for (const m of t.matchAll(/(^|[^0-9./-])([01]?[0-9])\s?[./-]\s?(20[0-9]{2})(?![0-9])/g))
+    if (+m[2] >= 1 && +m[2] <= 12 && !/[0-9]\s*$/.test(t.slice(0, m.index + m[1].length)))
+      add(new Date(+m[3], +m[2], 0).getDate(), m[2], m[3]);
+  if (!found.length) return null;
+  const { dt: date, y } = found.sort((a, b) => b.y - a.y || b.dt - a.dt)[0];
+  return { date, y, key: `${date.getFullYear()}-${pad(date.getMonth() + 1, 2)}-${pad(date.getDate(), 2)}` };
+}
+// Chiffres des imprimantes jet d'encre (matrice 5×7), avec les variantes courantes ; « / » pour les séparateurs
+const SCAN_57 = [
+  ['0', '01110 10001 10001 10001 10001 10001 01110'], ['0', '01110 10001 10011 10101 11001 10001 01110'],
+  ['1', '00100 01100 00100 00100 00100 00100 01110'], ['2', '01110 10001 00001 00010 00100 01000 11111'],
+  ['3', '11111 00010 00100 00010 00001 10001 01110'], ['3', '01110 10001 00001 00110 00001 10001 01110'],
+  ['4', '00010 00110 01010 10010 11111 00010 00010'], ['5', '11111 10000 11110 00001 00001 10001 01110'],
+  ['6', '00110 01000 10000 11110 10001 10001 01110'], ['6', '01110 10000 10000 11110 10001 10001 01110'],
+  ['7', '11111 00001 00010 00100 01000 01000 01000'], ['8', '01110 10001 10001 01110 10001 10001 01110'],
+  ['9', '01110 10001 10001 01111 00001 00010 01100'], ['9', '01110 10001 10001 01111 00001 00001 01110'],
+  ['/', '00000 00001 00010 00100 01000 10000 00000'],
+].map(([c, rows]) => [c, [...rows.replace(/ /g, '')].map(Number)]);
+// Une ligne lue d'après la forme de ses caractères : chaque caractère (colonnes d'encre contiguës) est
+// ramené à une grille 5×7 et comparé aux gabarits. Petit caractère = séparateur, étroit = « 1 »,
+// forme qui ne ressemble à aucun gabarit = « ? ».
+function scanDotDigits(l, g, w) {
+  const ink = (x, y) => g[y * w + x] < 128, segs = [];
+  for (let x = l.x0, s = null; x <= l.x1; x++) {
+    let top = -1, bot = -1;
+    if (x < l.x1) for (let y = l.y0; y < l.y1; y++) if (ink(x, y)) { if (top < 0) top = y; bot = y; }
+    if (top >= 0) { if (!s) segs.push(s = { x0: x, x1: x, top, bot }); s.x1 = x; s.top = Math.min(s.top, top); s.bot = Math.max(s.bot, bot); }
+    else s = null;
+  }
+  if (!segs.length) return '';
+  const tall = segs.map(s => s.bot - s.top + 1), H = Math.max(...tall);
+  const big = segs.filter((s, i) => tall[i] >= H * 0.75), med = a => a.sort((x, y) => x - y)[a.length >> 1];
+  const T = med(big.map(s => s.top)), B = med(big.map(s => s.bot)) + 1, Hd = B - T;
+  // chiffres collés (« 30 » d'un seul tenant) : police à chasse fixe, on coupe en parts égales
+  const cut = [];
+  segs.forEach(s => {
+    const k = s.bot - s.top + 1 >= Hd * 0.6 && (s.x1 - s.x0 + 1) > Hd * 0.95 ? Math.round((s.x1 - s.x0 + 1) / Hd / 0.66) : 1;
+    for (let i = 0; i < k; i++) cut.push({ ...s, x0: s.x0 + Math.round(i * (s.x1 - s.x0 + 1) / k), x1: s.x0 + Math.round((i + 1) * (s.x1 - s.x0 + 1) / k) - 1 });
+  });
+  let text = '', prev = null;
+  for (const s of cut) {
+    if (prev !== null && s.x0 - prev > Hd * 0.6) text += ' ';
+    prev = s.x1;
+    const sw = s.x1 - s.x0 + 1;
+    if (s.bot - s.top + 1 < Hd * 0.6) { text += '.'; continue; }
+    if (sw < Hd * 0.52) { text += '1'; continue; }
+    const v = [];
+    for (let r = 0; r < 7; r++) for (let c = 0; c < 5; c++) {
+      const xa = s.x0 + Math.floor(c * sw / 5), xb = s.x0 + Math.max(Math.floor((c + 1) * sw / 5), Math.floor(c * sw / 5) + 1);
+      const ya = T + Math.floor(r * Hd / 7), yb = T + Math.max(Math.floor((r + 1) * Hd / 7), Math.floor(r * Hd / 7) + 1);
+      let n = 0, k = 0;
+      for (let y = ya; y < yb; y++) for (let x = xa; x < xb; x++) { k++; if (ink(x, y)) n++; }
+      v.push(n / k);
+    }
+    let best = null;
+    for (const [c, t] of SCAN_57) {
+      const d = t.reduce((a, b, i) => a + (v[i] - b) ** 2, 0) / 35;
+      if (!best || d < best.d) best = { c, d };
+    }
+    text += best.d < 0.15 ? best.c : '?';
+  }
+  return text;
+}
+// Lecture vérifiée : la forme des chiffres (s'ils ressemblent à des chiffres en points), puis une relecture
+// à deux autres tailles, ne doivent pas donner une autre date (un « 3 » ou un « 5 » en points se lit parfois
+// « 2 » ou « 3 »). Pas de date dans une vérification = rien à redire.
+async function scanDateCheck(res, { worker, lab, g, w }) {
+  const same = text => { const r = scanParseDate(text); return !r || r.key === res.key; };
+  if (!same(res.used.map(l => scanDotDigits(l, g, w)).join(' '))) return false;
+  for (const H of [28, 48]) {
+    const again = [];
+    for (const l of res.used) again.push(await scanOcrLine(worker, l, lab, g, w, H));
+    if (!same(again.join(' '))) return false;
+  }
+  return true;
+}
+function scanDateFinal(read) {
+  // chaque ligne lue, puis chaque rangée de lignes mises bout à bout (« 25/10 » + « /2026 »)
+  const ls = read.filter(l => l.text).sort((a, b) => a.x0 - b.x0), rows = [];
+  ls.forEach(l => {
+    const cy = (l.y0 + l.y1) / 2, row = rows.find(r => Math.abs(r.cy - cy) < Math.min(r.h, l.h) * 0.5);
+    if (row) row.ls.push(l); else rows.push({ cy, h: l.h, ls: [l] });
+  });
+  let best = null;
+  [...ls.map(l => [l]), ...rows.filter(r => r.ls.length > 1).map(r => r.ls)].forEach(used => {
+    const r = scanParseDate(used.map(l => l.text).join(' '));
+    if (r && (!best || r.y > best.y || (r.y === best.y && r.date > best.date))) best = { ...r, used };
+  });
+  return best;
+}
+function scanDateFill(r) {
+  if (!r.key) return false;
+  $('bdd-date').value = r.key; bddLue = true;
+  bddRender();
+  $('bdd-again').hidden = false;
+  scanStatus('Date lue : ' + r.date.toLocaleDateString('fr-FR'));
+  return true;
+}
+SCAN_READERS.DATE = {
+  hint: 'Cadrez la date dans le rectangle', chars: SCAN_TXT_CHARS, vote: true, mixed: true,
+  dark: true,                                  // encre foncée sur emballage coloré
+  dots: true, minGlyph: 0.04, gapMax: 1.8,     // dates au jet d'encre (points), souvent petites ; « 27 . 10 » en chasse fixe
+  parse: () => ({ used: [] }), final: read => scanDateFinal(read),        // toutes les lignes : la date la plus tardive
+  check: scanDateCheck,
+  code: () => null, key: r => r.key || '', fill: scanDateFill,
+};
+
+// Où l'on scanne : 'SCAN' (onglet 📷), 'RC', 'OVERFLOW', ou un formulaire de zone ('CHILL-loc', 'CHILL-put'…)
+const scanReader  = slot => SCAN_READERS[slot === 'SCAN' ? (scan.mode === 'date' ? 'DATE' : 'ANY')
+  : { loc: 'ZLOC', put: 'PUT', buf: 'BUF', npl: 'NPL' }[slot.split('-')[1]] || slot];
+const scanHost    = slot => $(slot === 'SCAN' ? 'scan-home' : 'scan-host-' + slot);
+const scanSection = slot => $('section-' + slot.split('-')[0]);
+
+// Charge les lecteurs une seule fois : jsQR (facultatif) et Tesseract, qui ne lit qu'une ligne à la fois
+function scanLoad(src) {
+  return new Promise((ok, ko) => { const s = document.createElement('script'); s.src = src; s.onload = ok; s.onerror = ko; document.head.appendChild(s); });
+}
+function scanEngine() {
+  scan.qr = scan.qr || scanLoad(SCAN_QR).catch(() => {});        // sans jsQR, on lit le texte
+  return scan.engine || (scan.engine = scanLoad(SCAN_OCR).then(() => Tesseract.createWorker('eng', 1, {
+    logger: m => { if (/^loading/.test(m.status) && m.progress < 1) scanStatus('Chargement de la lecture… ' + Math.round(m.progress * 100) + ' %'); }
+  })).then(async w => { await w.setParameters({ tessedit_pageseg_mode: '7' }); scan.chars = ''; return w; })
+    .catch(e => { scan.engine = null; throw e; }));
+}
+
+// Codes lisibles par machine : QR (jsQR), et tout code-barres si le navigateur sait le lire (Chrome Android…)
+async function scanCodes(canvas, img) {
+  const found = [];
+  if (scan.bd === undefined) { try { scan.bd = 'BarcodeDetector' in window ? new BarcodeDetector() : null; } catch (e) { scan.bd = null; } }
+  if (scan.bd) {
+    try { (await scan.bd.detect(canvas)).forEach(b => found.push({ kind: b.format === 'qr_code' ? 'QR' : 'code-barres', value: b.rawValue })); }
+    catch (e) {}
+  }
+  const qr = window.jsQR && jsQR(img.data, img.width, img.height, { inversionAttempts: 'dontInvert' });
+  if (qr) found.push({ kind: 'QR', value: qr.data });
+  return found;
+}
+
+// Lit une image pour le scanner en cours : d'abord un code (exact), sinon le texte,
+// les lignes les plus marquées d'abord, arrêt dès que le code est complet
+async function scanRead(canvas, opts) {
+  const R = scanReader(scan.slot), worker = await scanEngine();
+  if (scan.chars !== R.chars) { await worker.setParameters({ tessedit_char_whitelist: R.chars }); scan.chars = R.chars; }
+  const w = canvas.width, h = canvas.height, img = canvas.getContext('2d').getImageData(0, 0, w, h);
+  for (const c of await scanCodes(canvas, img)) {
+    const res = R.code(c.value);
+    if (res) return { res, text: c.kind + ' ' + c.value, exact: true };
+  }
+  let { bin, g } = R.dark ? scanBinarizeDark(img) : scanBinarize(img);
+  if (opts.dots) { const j = scanJoinDots(bin, w, h); if (!j) return { res: R.parse([]), text: '' }; ({ bin, g } = j); }
+  const { lab, comps } = scanComponents(bin, w, h);
+  const qz = scanQRZones(comps);
+  // plusieurs QR côte à côte (étiquette Buffer) : jsQR n'en lit qu'un par image, on les lit un par un
+  if (window.jsQR) for (const z of qz) {
+    const m = (z.x1 - z.x0) * 0.1, x0 = Math.max(0, Math.floor(z.x0 - m)), y0 = Math.max(0, Math.floor(z.y0 - m));
+    const cw = Math.min(w, Math.ceil(z.x1 + m)) - x0, ch = Math.min(h, Math.ceil(z.y1 + m)) - y0;
+    const qr = cw > 0 && ch > 0 && jsQR(canvas.getContext('2d').getImageData(x0, y0, cw, ch).data, cw, ch, { inversionAttempts: 'dontInvert' });
+    const res = qr && R.code(qr.data);
+    if (res) return { res, text: 'QR ' + qr.data, exact: true };
+  }
+  const lines = scanLines(comps, w, h, opts.minGlyph, qz, R.mixed ? 0.5 : 0.65, R.gapMax);
+  const todo = lines.slice().sort((a, b) => (b.n > 1) - (a.n > 1) || b.n * b.h - a.n * a.h).slice(0, opts.maxLines);
+  // dates : les points de « 25.10.26 » sont trop petits pour compter comme caractères, on les rend à leur ligne
+  if (R.dots) todo.forEach(l => {
+    const ids = new Set(l.comps.map(c => c.id));
+    comps.forEach(c => {
+      const cx = (c.x0 + c.x1) / 2, cy = (c.y0 + c.y1) / 2;
+      if (!ids.has(c.id) && c.w <= l.h * 0.35 && c.h <= l.h * 0.35 && c.area >= l.h * l.h * 0.004 &&
+          cx > l.x0 && cx < l.x1 && cy > l.y0 && cy < l.y1) l.comps.push(c);
+    });
+  });
+  const read = [];
+  let res = R.parse(read);
+  for (const l of todo) {
+    l.text = await scanOcrLine(worker, l, lab, g, w);
+    read.push(l);
+    res = R.parse(read);
+    if (R.key(res)) break;
+  }
+  if (!R.key(res) && R.final) res = R.final(read, lines) || res;
+  if (R.key(res) && R.check && !(await R.check(res, { worker, lab, g, w }))) res = { used: [] };
+  // ce qui a servi, sinon tout ce qui a été lu
+  const shown = res.used.length ? res.used : read.filter(l => l.text).sort((a, b) => a.y0 - b.y0 || a.x0 - b.x0);
+  return { res, text: shown.map(l => l.text).join(' · ') };
+}
+
+// Une ligne courte (« 7T », « 12-6 ») se lit d'abord caractère par caractère : lue d'un bloc,
+// Tesseract avale parfois l'un des deux caractères d'une paire comme « 7T ». Si un caractère
+// isolé ne donne pas exactement une lettre, on revient à la lecture d'un bloc.
+// l.conf : confiance de la lecture (0-100), la plus faible de ses caractères ; H : hauteur de la ligne lue, en pixels
+async function scanOcrLine(worker, l, lab, g, w, H = 36) {
+  const cs = l.comps.slice().sort((a, b) => a.x0 - b.x0), dash = c => c.flat && c.h < l.h * 0.5;
+  if (cs.length <= 4 && cs.every(c => dash(c) || c.w <= c.h * 1.15)) { // courte, caractères séparés
+    let t = '', conf = 100;
+    await worker.setParameters({ tessedit_pageseg_mode: '10' });
+    try {
+      for (const c of cs) {
+        if (dash(c)) { t += '-'; continue; }
+        const { data } = await worker.recognize(scanLineCanvas({ ...l, comps: [c], x0: c.x0, x1: c.x1 }, lab, g, w, H));
+        const ch = data.text.trim();
+        if (ch.length !== 1) { t = null; break; }
+        t += ch; conf = Math.min(conf, data.confidence);
+      }
+    } finally { await worker.setParameters({ tessedit_pageseg_mode: '7' }); }
+    if (t) { l.conf = conf; return t; }
+  }
+  const { data } = await worker.recognize(scanLineCanvas(l, lab, g, w, H));
+  l.conf = data.confidence;
+  return data.text.trim();
+}
+
+function scanStatus(msg) { $('scan-status').textContent = msg; }
+
+// Le cadre à l'écran, traduit en pixels de la vidéo (affichée en object-fit: cover), avec une marge
+function scanGrab(v) {
+  const vw = v.videoWidth, vh = v.videoHeight, box = v.getBoundingClientRect(), gd = $('scan-guide').getBoundingClientRect();
+  const s = Math.max(box.width / vw, box.height / vh);
+  const ox = (box.width - vw * s) / 2, oy = (box.height - vh * s) / 2;
+  const mx = gd.width * 0.06, my = gd.height * 0.12;
+  const sx = Math.max(0, (gd.left - box.left - mx - ox) / s), sy = Math.max(0, (gd.top - box.top - my - oy) / s);
+  const sw = Math.min(vw - sx, (gd.width + mx * 2) / s), sh = Math.min(vh - sy, (gd.height + my * 2) / s);
+  const k = Math.min(1, 1000 / sw), c = document.createElement('canvas');
+  c.width = Math.round(sw * k); c.height = Math.round(sh * k);
+  c.getContext('2d', { willReadFrequently: true }).drawImage(v, sx, sy, sw, sh, 0, 0, c.width, c.height);
+  return c;
+}
+
+function scanStop() {
+  scan.run++;
+  if (scan.stream) { scan.stream.getTracks().forEach(t => t.stop()); scan.stream = null; }
+  $('scan-video').srcObject = null;
+}
+// Ferme la caméra des formulaires (Localisation, Put, Buffer, RC, Overflow, Libre)
+function scanClose() {
+  scanStop();
+  document.querySelectorAll('.scan-host').forEach(h => h.hidden = true);
+  document.querySelectorAll('.scan-btn').forEach(b => { if (b.dataset.label) b.textContent = b.dataset.label; });
+}
+function scanToggle(slot) { if (scanHost(slot).hidden) scanStart(slot); else scanClose(); }
+// À l'ouverture de l'onglet 📷 : la caméra, sauf si une photo est en cours de lecture
+function scanOpen() { if (!scan.stream && scan.photo !== scan.run) scanStart('SCAN'); }
+// Place le bloc caméra + photo là où l'on scanne
+function scanMount(slot) {
+  const host = scanHost(slot), live = $('scan-live');
+  scan.slot = slot;
+  host.appendChild(live);
+  live.hidden = false; $('scan-photo').hidden = true;
+  if (slot === 'SCAN') {
+    $('bdd-again').hidden = true;
+    // nouvelle lecture : le verdict du produit précédent ne doit pas rester affiché
+    if (scan.mode === 'date') { $('bdd-date').value = ''; bddLue = false; bddRender(); }
+  } else {
+    const b = $('scan-btn-' + slot);
+    b.dataset.label = b.dataset.label || b.textContent;
+    host.hidden = false; b.textContent = '✕ Fermer la caméra';
+  }
+}
+
+async function scanStart(slot) {
+  scanStop();
+  scanMount(slot);
+  const run = scan.run;
+  scan.hist = []; scan.t0 = Date.now();
+  if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+    scanStatus('Caméra indisponible ici (page non sécurisée ?) : utilisez 🖼 Photo'); return;
+  }
+  scanStatus('Ouverture de la caméra…');
+  let stream;
+  try {
+    stream = await navigator.mediaDevices.getUserMedia({ audio: false,
+      video: { facingMode: { ideal: 'environment' }, width: { ideal: 1920 }, height: { ideal: 1080 } } });
+  } catch (e) {
+    if (run === scan.run) scanStatus(e && e.name === 'NotAllowedError'
+      ? 'Caméra refusée : autorisez-la dans le navigateur, ou utilisez 🖼 Photo'
+      : 'Caméra indisponible : utilisez 🖼 Photo');
+    return;
+  }
+  if (run !== scan.run) { stream.getTracks().forEach(t => t.stop()); return; } // onglet quitté entre-temps
+  scan.stream = stream;
+  const v = $('scan-video');
+  v.srcObject = stream;
+  try { await v.play(); } catch (e) {}
+  scanStatus('Chargement de la lecture…');
+  try { await scanEngine(); }
+  catch (e) {
+    if (run === scan.run) { scanStop(); scanStatus('Lecture indisponible : vérifiez la connexion, puis rouvrez l\'onglet'); }
+    return;
+  }
+  if (run !== scan.run) return;
+  scanStatus(scanReader(slot).hint);
+  scanLoop(run);
+}
+
+// Lit image après image : un code (QR, code-barres) est exact ; un texte n'est retenu
+// que lu deux fois de suite à l'identique (texte libre : 2 fois sur les 3 dernières lectures)
+async function scanLoop(run) {
+  const v = $('scan-video'), R = scanReader(scan.slot);
+  let frame = 0;
+  while (run === scan.run) {
+    if (v.readyState >= 2 && v.videoWidth) {
+      let r = null;
+      // date : une image sur deux lue comme une impression en points
+      const dots = !!R.dots && frame++ % 2 === 1;
+      try { r = await scanRead(scanGrab(v), { minGlyph: R.minGlyph || 0.05, maxLines: 8, dots }); } catch (e) {}
+      if (run !== scan.run) return;
+      if (r) {
+        const code = R.key(r.res);
+        scan.hist = [code, ...scan.hist].slice(0, 3);
+        const seen = R.vote ? scan.hist.filter(c => c === code).length : scan.hist[1] === code ? 2 : 1;
+        if (code && (r.exact || seen >= 2)) { scanStop(); navigator.vibrate?.(80); R.fill(r.res, r.text); return; }
+        scanStatus((r.text ? 'Lu : ' + r.text : R.hint) + (Date.now() - scan.t0 > 10000 ? ' · approchez-vous, évitez les reflets' : ''));
+      }
+    }
+    await new Promise(ok => setTimeout(ok, 150));
+  }
+}
+
+// Sans caméra (ou au choix) : une photo de l'étiquette
+async function scanFile(input) {
+  const f = input.files && input.files[0];
+  input.value = '';
+  if (!f) return;
+  scanStop();
+  const slot = scan.slot, run = scan.photo = scan.run, img = $('scan-photo'), url = URL.createObjectURL(f);
+  scanMount(slot);
+  img.src = url; img.hidden = false;
+  scanStatus('Lecture de la photo…');
+  try {
+    await img.decode();
+    const k = Math.min(1, 2000 / Math.max(img.naturalWidth, img.naturalHeight)), c = document.createElement('canvas');
+    c.width = Math.round(img.naturalWidth * k); c.height = Math.round(img.naturalHeight * k);
+    c.getContext('2d', { willReadFrequently: true }).drawImage(img, 0, 0, c.width, c.height);
+    await scanEngine();
+    if (run !== scan.run) return;
+    scanStatus('Lecture de la photo…');
+    const R = scanReader(slot);
+    let r = await scanRead(c, { minGlyph: 0.012, maxLines: 30 });
+    // date : sinon, lue comme une impression en points
+    if (R.dots && run === scan.run && !R.key(r.res)) r = await scanRead(c, { minGlyph: 0.012, maxLines: 30, dots: true });
+    if (run === scan.run && !R.fill(r.res, r.text))
+      scanStatus(R === SCAN_READERS.DATE ? 'Aucune date lisible sur la photo : réessayez de plus près' : 'Aucun code lisible sur la photo : réessayez de plus près');
+  } catch (e) {
+    if (run === scan.run) scanStatus('Photo illisible : réessayez de plus près');
+  } finally {
+    URL.revokeObjectURL(url);
+    if (scan.photo === run) scan.photo = null;
+  }
+}
+
+// Application en arrière-plan : la caméra s'éteint, et se rallume au retour
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden) { if (scan.stream) scanStop(); return; }
+  if (!scanSection(scan.slot)?.classList.contains('active')) return;
+  if (scan.slot === 'SCAN') scanOpen();
+  else if (!scanHost(scan.slot).hidden && !scan.stream && scan.photo !== scan.run) scanStart(scan.slot);
+});
+
+function renderZone(z) {
+  const m = zoneMode[z];
+  if (m==='npl') updateNpl(z);
+  else if (m==='put') updatePut(z);
+  else if (m==='buf') updateBuf(z);
+  else updateLoc(z);
+}
+
+// ── TÂCHES DU JOUR ──────────────────────────────────────
+// Visual BDD et Count Buffer du jour affiché, d'après CFG.visual et CFG.countBuffer
+const JOURS = ['dimanche','lundi','mardi','mercredi','jeudi','vendredi','samedi'];
+let dayOffset = 0; // 0 = aujourd'hui, les flèches avancent ou reculent d'un jour
+
+const dayAdd = (d, n) => new Date(d.getFullYear(), d.getMonth(), d.getDate() + n);
+const dayFmt = (d, opts) => d.toLocaleDateString('fr-FR', opts);
+const dayShort = d => dayFmt(d, { weekday:'long', day:'2-digit', month:'2-digit' });
+// Date du délai : jour + delai ; si elle tombe un dimanche, décalée de CFG.visual.siDimanche
+function visualDate(d, delai) {
+  const brute = dayAdd(d, delai);
+  const decal = brute.getDay() === 0 ? (CFG.visual.siDimanche || 0) : 0;
+  return { date: dayAdd(brute, decal), dimanche: decal ? brute : null };
+}
+function dayChips(list, cls) {
+  return `<div class="day-chips">${[].concat(list).map(t =>
+    `<span class="day-chip ${cls}${String(t).length <= 2 ? ' big' : ''}">${t}</span>`).join('')}</div>`;
+}
+function dayShift(n) { dayOffset = n ? dayOffset + n : 0; renderDay(); }
+function renderDay() {
+  const d = dayAdd(new Date(), dayOffset), jour = JOURS[d.getDay()];
+  const name = dayFmt(d, { weekday:'long', day:'numeric', month:'long' });
+  $('day-name').textContent = name[0].toUpperCase() + name.slice(1);
+  $('day-rel').textContent = { '-1':'Hier', '0':'Aujourd\'hui', '1':'Demain' }[dayOffset]
+    || (dayOffset > 0 ? 'Dans ' + dayOffset + ' jours' : 'Il y a ' + -dayOffset + ' jours');
+
+  const v = CFG.visual.jours[jour];
+  if (v) {
+    const delai = v.delai ?? CFG.visual.delaiDefaut, r = visualDate(d, delai);
+    $('day-visual-delai').textContent = 'Délai ' + delai + ' jours';
+    $('day-visual').innerHTML = dayChips(v.zones, '')
+      + `<div class="day-date"><span>Date du délai (J+${delai})</span><code>${dayShort(r.date)}</code>`
+      + (r.dimanche ? `<small>${dayShort(r.dimanche)} retiré</small>` : '')
+      + `<small>À retirer : date ${bddRegle(r.date)}</small></div>`;
+  } else {
+    $('day-visual-delai').textContent = '';
+    $('day-visual').innerHTML = '<div class="day-empty">Pas de Visual BDD ce jour-là</div>';
+  }
+
+  // Count Buffer : une ligne par zone qui a quelque chose ce jour-là (sa ligne du jour, sinon « tous »)
+  const count = Object.entries(CFG.countBuffer).map(([z, jours]) => {
+    const t = jours[jour] ?? jours.tous;
+    if (!t || !t.length) return '';
+    const col = CFG.zones[z] ? CFG.zones[z].color : '--jour';
+    return `<div class="day-zone"><div class="day-zone-name"><span class="dot" style="background:var(${col})"></span>`
+      + `${z[0] + z.slice(1).toLowerCase()}</div>${dayChips(t, 'z-' + z)}</div>`;
+  }).join('');
+  $('day-count').innerHTML = count || '<div class="day-empty">Pas de Count Buffer ce jour-là</div>';
+}
+// Appli restée ouverte : au retour, la date du jour est recalculée
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden) return;
+  if ($('section-JOUR').classList.contains('active')) renderDay();
+  if ($('section-SCAN').classList.contains('active') && scan.mode === 'date') bddRender();
+});
+
+// ── CONTRÔLE D'UNE DATE (onglet 📷, mode 📅) ────────────
+// Date d'un produit, scannée ou saisie : à retirer aujourd'hui ou non, avec le délai du Visual BDD
+let bddDelai = null;                                   // délai choisi ; null = celui du jour
+let bddLue = false;                                    // date lue par la caméra (à vérifier), pas saisie
+const bddDelaiDuJour = () => CFG.visual.jours[JOURS[new Date().getDay()]]?.delai ?? CFG.visual.delaiDefaut;
+const bddDelais = () => [...new Set([CFG.visual.delaiDefaut, ...Object.values(CFG.visual.jours).map(j => j.delai ?? CFG.visual.delaiDefaut)])]
+  .sort((a, b) => a - b);
+const bddRegle = lim => CFG.visual.retirerLeJourMeme ? `jusqu'au ${dayShort(lim)} inclus` : `avant le ${dayShort(lim)}`;
+const bddARetirer = (date, lim) => CFG.visual.retirerLeJourMeme ? date <= lim : date < lim;
+
+function scanSetMode(mode) {
+  scan.mode = mode;
+  $('scan-modes').querySelectorAll('.mode-btn').forEach(b => b.classList.toggle('active', b.dataset.mode === mode));
+  $('bdd-panel').hidden = mode !== 'date';
+  if (mode === 'date') bddRender();
+  scanStart('SCAN');
+}
+function bddRender() {
+  const today = dayAdd(new Date(), 0), delai = bddDelai ?? bddDelaiDuJour(), lim = visualDate(today, delai);
+  $('bdd-delais').innerHTML = bddDelais().map(n =>
+    `<button class="mode-btn${n === delai ? ' active' : ''}" onclick="bddDelai=${n};bddRender()">Délai ${n} jours</button>`).join('');
+  $('bdd-regle').textContent = `Aujourd'hui, J+${delai} : à retirer si la date est ${bddRegle(lim.date)}`
+    + (lim.dimanche ? ` (dimanche ${lim.dimanche.toLocaleDateString('fr-FR', { day:'2-digit', month:'2-digit' })} retiré)` : '');
+  const v = $('bdd-date').value, box = $('bdd-verdict');
+  if (!v) { box.className = ''; box.textContent = 'Scannez ou saisissez la date du produit'; return; }
+  const [y, m, d] = v.split('-').map(Number), date = new Date(y, m - 1, d), out = bddARetirer(date, lim.date);
+  box.className = out ? 'out' : 'ok';
+  box.innerHTML = `<strong>${out ? '🚫 À retirer' : '✅ OK'}</strong>`
+    + `<span>${dayFmt(date, { weekday:'long', day:'2-digit', month:'2-digit', year:'numeric' })}</span>`
+    + (date < today ? '<span>date déjà dépassée</span>' : '')
+    + (bddLue ? '<small>Lue par la caméra : vérifiez-la sur le produit</small>' : '');
+}
+
+// ── SWITCHING ───────────────────────────────────────────
+function switchZone(zone) {
+  document.querySelectorAll('.zone-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  $('section-'+zone).classList.add('active');
+  document.querySelector('.tab[data-zone="'+zone+'"]').classList.add('active');
+  if (CFG.zones[zone]) restoreMode(zone);
+  scanClose();
+  if (zone === 'SCAN') { bddDelai = null; bddRender(); scanOpen(); }
+  if (zone === 'JOUR') dayShift(0);
+}
+
+function restoreMode(z) {
+  const m = zoneMode[z] || 'loc';
+  ['loc','put','npl','buf'].forEach(x => { const e=$(z+'-'+x); if(e) e.classList.toggle('active', x===m); });
+  $('section-'+z).querySelectorAll('.mode-btn').forEach(b => b.classList.toggle('active', b.dataset.mode===m));
+  renderZone(z);
+}
+
+function switchMode(z, mode, btn) {
+  scanClose();
+  zoneMode[z] = mode;
+  ['loc','put','npl','buf'].forEach(x => { const e=$(z+'-'+x); if(e) e.classList.toggle('active', x===mode); });
+  btn.closest('.form-panel').querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderZone(z);
+}
+
+function toggleBufSuffix(z, btn) {
+  bufSuffix[z] = !bufSuffix[z];
+  btn.classList.toggle('active', bufSuffix[z]);
+  btn.textContent = bufSuffix[z] ? '✓ -1 ajouté' : '＋ Ajouter -1';
+  updateBuf(z);
+}
+
+function switchBuf(z, type, btn) {
+  bufMode[z] = type;
+  ['etag','pallet'].forEach(t => { const e=$(z+'-buf-'+t); if(e) e.classList.toggle('active', t===type); });
+  btn.closest('.buf-toggle').querySelectorAll('.buf-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  updateBuf(z);
+}
+
+// ── FILE D'IMPRESSION ───────────────────────────────────
+const QUEUE_KEY = 'labelgen-print-queue-v1', QUEUE_MAX = 60;
+let printQueue = [];
+
+function queueLoad() {
+  try {
+    const r = localStorage.getItem(QUEUE_KEY); printQueue = r ? (JSON.parse(r) || []) : [];
+    // une file enregistrée avant l'anti-doublon peut en contenir : on garde la première
+    printQueue = printQueue.filter((i, n) => !i.spec || printQueue.findIndex(j => j.spec && specKey(j.spec) === specKey(i.spec)) === n);
+  }
+  catch(e) { printQueue = []; }
+}
+function queueHas(spec) { const k = specKey(spec); return printQueue.some(i => i.spec && specKey(i.spec) === k); }
+function queueSave() { try { localStorage.setItem(QUEUE_KEY, JSON.stringify(printQueue)); } catch(e) {} }
+
+function toast(msg) {
+  const t = $('toast'); if (!t) return;
+  t.textContent = msg; t.classList.add('show');
+  clearTimeout(t._t); t._t = setTimeout(() => t.classList.remove('show'), 1600);
+}
+
+function queuePush(spec, canvas) {
+  if (!canvas || printQueue.length >= QUEUE_MAX || queueHas(spec)) return false;
+  printQueue.push({
+    id: Date.now().toString(36) + Math.random().toString(36).slice(2,6),
+    name: specName(spec) || 'Étiquette',
+    img: canvas.toDataURL('image/png'),
+    spec: spec
+  });
+  return true;
+}
+// items : [[spec, canvas], …] — un seul message pour le lot (Dual = Repl + Pick)
+function queueAdd(items) {
+  let added = 0, dup = 0, full = false;
+  items.forEach(([spec, canvas]) => {
+    if (!canvas) return;
+    if (queueHas(spec)) dup++;
+    else if (queuePush(spec, canvas)) added++;
+    else full = true;
+  });
+  if (added) { queueSave(); queueRender(); }
+  toast(full  ? 'File pleine (' + QUEUE_MAX + ')'
+      : added ? 'Ajouté à la file (' + printQueue.length + ')' + (dup ? ' · doublon ignoré' : '')
+      : dup   ? 'Déjà dans la file'
+      : 'Rien à ajouter');
+}
+function queueRemove(id) { printQueue = printQueue.filter(i => i.id !== id); queueSave(); queueRender(); }
+function queueClear() {
+  if (!printQueue.length) return;
+  if (!confirm('Vider la file d\'impression ?')) return;
+  printQueue = []; queueSave(); queueRender();
+}
+function queueRender() {
+  const n = printQueue.length;
+  $('queue-count').textContent = n;
+  $('queue-count2').textContent = '(' + n + ')';
+  $('queue-fab').classList.toggle('show', n > 0);
+  $('queue-list').innerHTML = n
+    ? printQueue.map(i => `<div class="queue-item"><img src="${i.img}" alt=""><span>${i.name}</span><button onclick="queueRemove('${i.id}')" title="Retirer">✕</button></div>`).join('')
+    : '<div class="queue-empty">File vide</div>';
+}
+function queueOpen()  { $('queue-overlay').classList.add('open'); }
+function queueClose() { $('queue-overlay').classList.remove('open'); $('queue-share-link').hidden = true; }
+
+function queuePrint() {
+  if (!printQueue.length) return;
+  const pages = printQueue.map(i => `<div class="page"><img src="${i.img}"></div>`).join('');
+  let iframe = document.getElementById('print-frame');
+  if (iframe) iframe.remove();
+  iframe = document.createElement('iframe');
+  iframe.id = 'print-frame';
+  iframe.style.cssText = 'position:fixed;top:-9999px;left:-9999px;width:0;height:0;border:0';
+  document.body.appendChild(iframe);
+  const doc = iframe.contentDocument || iframe.contentWindow.document;
+  doc.open();
+  doc.write(`<!DOCTYPE html><html><head><meta charset="UTF-8"><style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    @page{margin:0;size:auto}
+    .page{display:flex;justify-content:center;align-items:center;min-height:100vh;background:#fff;page-break-after:always}
+    .page:last-child{page-break-after:auto}
+    img{display:block;max-width:100%;max-height:100vh}
+  </style></head><body>${pages}</body></html>`);
+  doc.close();
+  iframe.onload = () => { iframe.contentWindow.focus(); iframe.contentWindow.print(); };
+  queueClose();
+}
+
+// Ajouts à la file depuis chaque section
+function queueSpec(spec)      { specCanvas(spec, cv => queueAdd([[spec, cv]])); }
+function queueLoc(z)          { queueSpec(specLoc(z)); }
+function queueLocPick(z)      { queueSpec(specLocPick(z)); }
+function queueDual(z)         { queueDualSpecs(specLoc(z), specLocPick(z)); }
+function queueDualSpecs(s1, s2) { specCanvas(s1, c1 => specCanvas(s2, c2 => queueAdd([[s1, c1], [s2, c2]]))); }
+function queuePut(z)          { queueSpec(specPut(z)); }
+function queueNpl(z)          { queueSpec(specNpl(z)); }
+function queueBufEtagPick(z)  { queueSpec(specBufEtag(z)); }
+function queueBufPallet(z)    { queueSpec(specBufPallet(z)); }
+function queueLibre()         { queueSpec(specLibre()); }
+
+// ── PARTAGE PAR LIEN ────────────────────────────────────
+// Le lien transporte les recettes des étiquettes dans son fragment #,
+// qui n'est jamais envoyé à un serveur : l'autre poste les régénère.
+// #q= : le texte en base64url · #z= : le même texte compressé, pour le QR code
+function b64urlEncode(bytes) {
+  let bin = ''; bytes.forEach(b => bin += String.fromCharCode(b));
+  return btoa(bin).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
+}
+function b64urlDecode(str) {
+  return Uint8Array.from(atob(str.replace(/-/g,'+').replace(/_/g,'/')), c => c.charCodeAt(0));
+}
+// Passe des octets dans un CompressionStream / DecompressionStream du navigateur
+function pipeBytes(bytes, stream) {
+  return new Response(new Blob([bytes]).stream().pipeThrough(stream)).arrayBuffer().then(b => new Uint8Array(b));
+}
+// Adresse que l'autre appareil ouvrira : CFG.appUrl, sinon la page elle-même
+const shareBase = () => CFG.appUrl || location.href.split('#')[0];
+// Page ouverte en fichier ou sur localhost : un autre appareil ne pourra pas l'ouvrir
+const shareIsLocal = () => !CFG.appUrl && (!/^https?:$/.test(location.protocol) || /^(localhost|127\.|\[::1\])/.test(location.hostname));
+const shareUrl = (key, bytes) => shareBase() + '#' + key + '=' + b64urlEncode(bytes);
+function queueEncode() {
+  // encodeURIComponent laisse passer le ~ : on l'échappe, c'est notre séparateur
+  const e = v => encodeURIComponent(v || '').replace(/~/g, '%7E');
+  const specs = printQueue.map(i => i.spec).filter(Boolean);
+  if (!specs.length) return '';
+  const body = specs.map(sp => sp.k === 'li'
+    ? ['li', e(sp.c), e(sp.t1), e(sp.t2)].join('~')
+    : [sp.k, e(sp.c)].join('~')).join('|');
+  return '1|' + body;
+}
+function queueDecode(text) {
+  const d = v => decodeURIComponent(v || '');
+  const parts = text.split('|');
+  if (parts.shift() !== '1') return [];
+  return parts.filter(Boolean).map(seg => {
+    const f = seg.split('~');
+    return f[0] === 'li' ? { k:'li', c:d(f[1]), t1:d(f[2]), t2:d(f[3]) }
+                         : { k:f[0], c:d(f[1]) };
+  }).filter(sp => sp.c || sp.t1 || sp.t2);
+}
+function queueShareUrl() {
+  const text = queueEncode();
+  return text ? shareUrl('q', new TextEncoder().encode(text)) : '';
+}
+// Compressé, le lien est ~3× plus court : QR moins dense, donc plus facile à scanner
+async function queueQRUrl() {
+  const text = queueEncode();
+  if (!text) return '';
+  try { return shareUrl('z', await pipeBytes(new TextEncoder().encode(text), new CompressionStream('deflate-raw'))); }
+  catch(e) { return queueShareUrl(); } // navigateur sans compression : lien normal
+}
+function queueShare() {
+  const url = queueShareUrl();
+  if (!url) { toast('Rien à partager'); return; }
+  const field = $('queue-share-link');
+  field.hidden = false; field.value = url; field.select();
+  const orphans = printQueue.filter(i => !i.spec).length;
+  const msg = (orphans ? `Lien copié · ${orphans} étiquette(s) trop ancienne(s) ignorée(s)` : 'Lien copié')
+    + (shareIsLocal() ? ' · lien local, valable sur cet appareil seulement' : '');
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(url).then(() => toast(msg), () => toast('Lien prêt : copiez-le'));
+  } else {
+    let ok = false;
+    try { ok = document.execCommand('copy'); } catch(e) {}
+    toast(ok ? msg : 'Lien prêt : copiez-le');
+  }
+}
+// Le lien en QR code : l'autre appareil le scanne avec son appareil photo
+async function queueQR() {
+  const url = await queueQRUrl();
+  if (!url) { toast('Rien à partager'); return; }
+  const box = $('queue-qr'), note = $('queue-qr-note');
+  box.innerHTML = '';
+  if (shareIsLocal()) {
+    // un QR file:// ou localhost se scanne, mais le téléphone n'a aucune page à ouvrir
+    note.textContent = 'Appli ouverte en local : un autre appareil ne pourrait pas ouvrir ce QR code. '
+      + 'Ouvrez la version en ligne, ou indiquez son adresse dans CFG.appUrl.';
+  } else {
+    try {
+      // niveau L : le QR le moins dense, un écran n'abîme pas le code comme une étiquette
+      new QRCode(box, { text:url, width:1024, height:1024, colorDark:'#000', colorLight:'#fff', correctLevel:QRCode.CorrectLevel.L });
+    } catch(e) { toast('Trop d\'étiquettes pour un QR code : utilisez le lien'); return; }
+    box.removeAttribute('title'); // la bibliothèque y met le lien entier
+    const n = printQueue.filter(i => i.spec).length, orphans = printQueue.length - n;
+    note.textContent = n + ' étiquette(s) · s\'ouvre sur ' + shareBase().split('/')[2]
+      + (orphans ? ` · ${orphans} trop ancienne(s) ignorée(s)` : '');
+  }
+  $('queue-qr-overlay').classList.add('open');
+}
+function queueQRClose() { $('queue-qr-overlay').classList.remove('open'); }
+async function queueImportFromHash() {
+  const m = location.hash.match(/^#([qz])=(.+)$/);
+  if (!m) return;
+  history.replaceState(null, '', location.pathname + location.search);
+  let specs = [];
+  try {
+    let bytes = b64urlDecode(m[2]);
+    if (m[1] === 'z') bytes = await pipeBytes(bytes, new DecompressionStream('deflate-raw'));
+    specs = queueDecode(new TextDecoder().decode(bytes));
+  } catch(e) {}
+  if (!specs.length) { toast('Lien de partage illisible'); return; }
+  let added = 0, dup = 0, i = 0;
+  const next = () => {
+    if (i >= specs.length) {
+      queueSave(); queueRender();
+      toast(added + ' étiquette(s) importée(s)' + (dup ? ' · ' + dup + ' doublon(s) ignoré(s)' : ''));
+      if (added || dup) queueOpen();
+      return;
+    }
+    const sp = specs[i++];
+    if (queueHas(sp)) { dup++; next(); return; }
+    specCanvas(sp, cv => { if (queuePush(sp, cv)) added++; next(); });
+  };
+  next();
+}
+
+// ── HTML BUILDER ────────────────────────────────────────
+function makeOpts(arr) {
+  return arr.map(v => typeof v==='object' ? `<option value="${v.value}">${v.label}</option>` : `<option>${v}</option>`).join('');
+}
+function makeField(label, inner) {
+  return `<div class="field"><label>${label}</label>${inner}</div>`;
+}
+function makeSelect(id, arr, onchange) {
+  return `<select id="${id}" onchange="${onchange}">${makeOpts(arr)}</select>`;
+}
+function makePreview(id, color, label) {
+  return `<div class="preview-loc"><span>${label}</span><code id="${id}" style="color:var(${color})"></code></div>`;
+}
+function makeLive(id) {
+  return `<div class="live-barcode-wrap"><div id="${id}"></div></div>`;
+}
+function makeScan(slot) {
+  return `<div class="scan-open"><button class="btn-q scan-btn" id="scan-btn-${slot}" onclick="scanToggle('${slot}')">📷 Scanner l'étiquette</button></div>
+      <div class="scan-host" id="scan-host-${slot}" hidden></div>`;
+}
+
+function buildZone(z) {
+  const c = CFG.zones[z];
+  const p = c.prefix, col = c.color;
+
+  // LOC
+  let etagFields = [
+    makeField('Allée',    makeSelect(p+'-allee',   c.loc.allees,   `updateLoc('${z}')`)),
+    makeField('Étagère',  `<input type="number" id="${p}-etag" value="1" min="1" max="200" oninput="updateLoc('${z}')">`),
+    makeField('Rayon',    makeSelect(p+'-rayon',   c.loc.rayons,   `updateLoc('${z}')`)),
+    makeField('Section',  makeSelect(p+'-section', c.loc.sections, `updateLoc('${z}')`)),
+  ].join('');
+
+  const locHTML = `
+    <div class="sub-form active" id="${z}-loc">
+      ${makeScan(z+'-loc')}
+      <div class="form-grid">${etagFields}</div>
+      ${makePreview('preview-'+z, col, 'Localisation')}
+      ${makeLive('live-'+z+'-loc')}
+      <div style="display:flex;gap:8px;margin-top:12px">
+        ${z !== 'FROZEN' ? `<button onclick="printLoc('${z}')" class="btn-print" style="flex:1;padding:12px;border:none;border-radius:10px;background:var(--border);color:var(--text);font-family:var(--sans);font-size:.9rem;font-weight:700;cursor:pointer">🖨 Replenishment</button>` : ''}
+        <button onclick="printLocPick('${z}')" class="btn-print" style="flex:1;padding:12px;border:none;border-radius:10px;background:var(--border);color:var(--text);font-family:var(--sans);font-size:.9rem;font-weight:700;cursor:pointer">🖨 Pick</button>
+        ${z !== 'FROZEN' ? `<button onclick="printDualLoc('${z}')" class="btn-print" style="flex:1;padding:12px;border:none;border-radius:10px;background:var(--border);color:var(--text);font-family:var(--sans);font-size:.9rem;font-weight:700;cursor:pointer">🖨 Dual</button>` : ''}
+      </div>
+      <div class="btn-row">
+        ${z !== 'FROZEN' ? `<button class="btn-q" onclick="queueLoc('${z}')">＋🖨 Repl</button>` : ''}
+        <button class="btn-q" onclick="queueLocPick('${z}')">＋🖨 Pick</button>
+        ${z !== 'FROZEN' ? `<button class="btn-q" onclick="queueDual('${z}')">＋🖨 Dual</button>` : ''}
+      </div>
+    </div>`;
+
+  // PUT
+  const putHTML = `
+    <div class="sub-form" id="${z}-put">
+      ${makeScan(z+'-put')}
+      <div class="form-grid">
+        ${makeField('Numéro',      makeSelect(p+'-put-x',      c.put.x,       `updatePut('${z}')`)) }
+        ${makeField('Lettre', makeSelect(p+'-put-lettre', c.put.lettres, `updatePut('${z}')`)) }
+      </div>
+      ${makePreview('preview-'+z+'-put', '--put', 'Put Section')}
+      ${makeLive('live-'+z+'-put')}
+      <div style="display:flex;gap:8px;margin-top:12px">
+        <button onclick="printPut('${z}')" class="btn-print" style="flex:1;padding:12px;border:none;border-radius:10px;background:var(--border);color:var(--text);font-family:var(--sans);font-size:.9rem;font-weight:700;cursor:pointer">🖨 Imprimer</button>
+      </div>
+      <div class="btn-row">
+        <button class="btn-q" onclick="queuePut('${z}')">＋🖨</button>
+      </div>
+    </div>`;
+
+  // NPL
+  const nplHTML = `
+    <div class="sub-form" id="${z}-npl">
+      <div class="preview-loc"><span>NPL</span><code style="color:var(${col})">${c.npl}</code></div>
+      ${makeLive('live-'+z+'-npl')}
+      <div style="display:flex;gap:8px;margin-top:12px">
+        <button onclick="printNpl('${z}')" class="btn-print" style="flex:1;padding:12px;border:none;border-radius:10px;background:var(--border);color:var(--text);font-family:var(--sans);font-size:.9rem;font-weight:700;cursor:pointer">🖨 Imprimer</button>
+      </div>
+      <div class="btn-row">
+        <button class="btn-q" onclick="queueNpl('${z}')">＋🖨</button>
+      </div>
+    </div>`;
+
+  // BUF ETAG fields vary by zone
+  let bufEtagFields = '';
+  if (c.buf.etag.xx1) bufEtagFields += makeField('Numéro', makeSelect(p+'-buf-xx1', c.buf.etag.xx1, `updateBuf('${z}')`));
+  bufEtagFields += makeField('Étagère', makeSelect(p+'-buf-xxx', c.buf.etag.xxx, `updateBuf('${z}')`));
+  bufEtagFields += makeField('Rayon',  makeSelect(p+'-buf-xx2', c.buf.etag.xx2, `updateBuf('${z}')`));
+
+  const bufHTML = `
+    <div class="sub-form" id="${z}-buf">
+      ${makeScan(z+'-buf')}
+      ${c.buf.pallet ? `<div class="buf-toggle">
+        <button class="buf-btn active" onclick="switchBuf('${z}','etag',this)">🗄 Étagère</button>
+        <button class="buf-btn" onclick="switchBuf('${z}','pallet',this)">🟦 Pallet</button>
+      </div>` : ''}
+      <div class="sub-form active" id="${z}-buf-etag">
+        <div class="form-grid">${bufEtagFields}</div>
+        <div class="suffix-row">
+          <button class="suffix-btn" onclick="toggleBufSuffix('${z}',this)">＋ Ajouter -1</button>
+        </div>
+        ${makePreview('preview-'+z+'-buf-etag', '--buf', 'Buffer Étagère')}
+        ${makeLive('live-'+z+'-buf-etag')}
+        <div style="display:flex;gap:8px;margin-top:12px">
+          <!-- <button onclick="printBuf('${z}')" class="btn-print" style="flex:1;padding:12px;border:none;border-radius:10px;background:var(--border);color:var(--text);font-family:var(--sans);font-size:.9rem;font-weight:700;cursor:pointer">🖨 Imprimer</button> -->
+          <button onclick="printBufEtagPick('${z}')" class="btn-print" style="flex:1;padding:12px;border:none;border-radius:10px;background:var(--border);color:var(--text);font-family:var(--sans);font-size:.9rem;font-weight:700;cursor:pointer">🖨 Imprimer</button>
+        </div>
+        <div class="btn-row">
+          <button class="btn-q" onclick="queueBufEtagPick('${z}')">＋🖨</button>
+        </div>
+      </div>
+      ${c.buf.pallet ? `<div class="sub-form" id="${z}-buf-pallet">
+        <div class="form-grid">
+          ${makeField('Pallet', makeSelect(p+'-buf-pxx1', c.buf.pallet.xx1, `updateBuf('${z}')`)) }
+          ${makeField('Numéro', makeSelect(p+'-buf-pxx2', c.buf.pallet.xx2, `updateBuf('${z}')`)) }
+        </div>
+        ${makePreview('preview-'+z+'-buf-pallet', '--buf', 'Buffer Pallet')}
+        ${makeLive('live-'+z+'-buf-pallet')}
+        <div style="display:flex;gap:8px;margin-top:12px">
+          <button onclick="printBuf('${z}')" class="btn-print" style="flex:1;padding:12px;border:none;border-radius:10px;background:var(--border);color:var(--text);font-family:var(--sans);font-size:.9rem;font-weight:700;cursor:pointer">🖨 Imprimer</button>
+        </div>
+        <div class="btn-row">
+          <button class="btn-q" onclick="queueBufPallet('${z}')">＋🖨</button>
+        </div>
+      </div>` : ''}
+    </div>`;
+
+  return `
+  <div class="zone-section${z==='AMBIANT'?' active':''}" id="section-${z}">
+    <div class="form-panel">
+      <div class="mode-toggle">
+        <button class="mode-btn active" data-mode="loc" onclick="switchMode('${z}','loc',this)">📍 Localisation</button>
+        <button class="mode-btn" data-mode="put" onclick="switchMode('${z}','put',this)">📦 Put Section</button>
+      </div>
+      <div class="mode-toggle mode-toggle-sub">
+        <button class="mode-btn" data-mode="npl" onclick="switchMode('${z}','npl',this)">🚫 NPL</button>
+        <button class="mode-btn" data-mode="buf" onclick="switchMode('${z}','buf',this)">📦 Buffer</button>
+      </div>
+      ${locHTML}${putHTML}${nplHTML}${bufHTML}
+    </div>
+  </div>`;
+}
+
+// ── INIT ────────────────────────────────────────────────
+window.addEventListener('load', () => {
+  // Tabs
+  const dotMap = { AMBIANT:'A', CHILL:'C', FROZEN:'F' };
+  const mainTabs = document.getElementById('tabs-main');
+  const subTabs  = document.getElementById('tabs-sub');
+
+  ZONES.forEach(z => {
+    const b = document.createElement('button');
+    b.className = 'tab' + (z==='AMBIANT' ? ' active' : '');
+    b.dataset.zone = z;
+    b.onclick = () => switchZone(z);
+    b.innerHTML = `<span class="dot dot-${dotMap[z]}"></span> ${z[0]+z.slice(1).toLowerCase()}`;
+    mainTabs.appendChild(b);
+  });
+  const jb = document.createElement('button');
+  jb.className = 'tab tab-icon'; jb.dataset.zone = 'JOUR';
+  jb.onclick = () => switchZone('JOUR');
+  jb.textContent = '📋'; jb.title = 'Tâches du jour : Visual BDD et Count Buffer';
+  mainTabs.appendChild(jb);
+
+  const icons = { CALC:'🧮', SCAN:'📷' };
+  [['OVERFLOW','O'],['RC','R'],['CONSOLIDATION','CO'],['LIBRE','L'],['CALC','CA'],['SCAN','SC']].forEach(([z,d]) => {
+    const b = document.createElement('button');
+    b.className = 'tab'; b.dataset.zone = z;
+    b.onclick = () => switchZone(z);
+    b.innerHTML = icons[z] || `<span class="dot dot-${d}"></span> ${z[0]+z.slice(1).toLowerCase()}`;
+    if (z === 'SCAN') b.title = 'Scanner une étiquette';
+    subTabs.appendChild(b);
+  });
+
+  // Build zone HTML
+  const zonesDiv = document.getElementById('zones');
+  ZONES.forEach(z => { zonesDiv.innerHTML += buildZone(z); });
+
+  // RC series
+  document.getElementById('RC-serie').innerHTML = CFG.rc.series
+    .map(s => `<option value="${s.value}">${s.label}</option>`).join('');
+
+  // Initial renders
+  ZONES.forEach(z => { updateLoc(z); updatePut(z); updateBuf(z); updateNpl(z); });
+  updateOverflow();
+  updateRC();
+  renderQR('live-CONSOLIDATION', 'CONSOLIDATION');
+
+
+  // File d'impression (locale à cet appareil)
+  queueLoad();
+  queueRender();
+  queueImportFromHash();
+  // lien ouvert dans un onglet où l'appli est déjà chargée : seul le # change
+  window.addEventListener('hashchange', queueImportFromHash);
+});
+</script>
+<footer style="text-align:center;font-size:14px;color:#666;">
+  <a href="https://www.instagram.com/alexis_potelle/" target="_blank" rel="noopener noreferrer" class="footer-link">© 2026 Alexis POTELLE · Click ici & Suis-moi sur Instagram</a>
+</footer>
+</body>
+</html>

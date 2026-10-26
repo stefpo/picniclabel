@@ -1,0 +1,22 @@
+{
+  "name": "Label Gen",
+  "short_name": "Label Gen",
+  "description": "G\u00e9n\u00e9rateur de QR codes pour les localisations entrep\u00f4t",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#0A0C0F",
+  "theme_color": "#0A0C0F",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDAgMjAwIiB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCI+CiAgPCEtLSBGb25kIHJvdWdlIFBpY25pYyAtLT4KICA8cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgcng9IjM2IiBmaWxsPSIjZTgxODFiIi8+CgogIDwhLS0gTEFCRUwgLS0+CiAgPHRleHQKICAgIHg9IjEwMCIKICAgIHk9IjkwIgogICAgZm9udC1mYW1pbHk9IidBcmlhbCBCbGFjaycsICdIZWx2ZXRpY2EgTmV1ZScsIHNhbnMtc2VyaWYiCiAgICBmb250LXdlaWdodD0iOTAwIgogICAgZm9udC1zaXplPSI0NiIKICAgIGZpbGw9IndoaXRlIgogICAgdGV4dC1hbmNob3I9Im1pZGRsZSIKICAgIGxldHRlci1zcGFjaW5nPSItMSIKICA+TEFCRUw8L3RleHQ+CgoKCiAgPCEtLSBHRU4gLS0+CiAgPHRleHQKICAgIHg9IjEwMCIKICAgIHk9IjE1OCIKICAgIGZvbnQtZmFtaWx5PSInQXJpYWwgQmxhY2snLCAnSGVsdmV0aWNhIE5ldWUnLCBzYW5zLXNlcmlmIgogICAgZm9udC13ZWlnaHQ9IjkwMCIKICAgIGZvbnQtc2l6ZT0iNTYiCiAgICBmaWxsPSJ3aGl0ZSIKICAgIHRleHQtYW5jaG9yPSJtaWRkbGUiCiAgICBsZXR0ZXItc3BhY2luZz0iNCIKICA+R0VOPC90ZXh0Pgo8L3N2Zz4K",
+      "sizes": "192x192",
+      "type": "image/svg+xml"
+    },
+    {
+      "src": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDAgMjAwIiB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCI+CiAgPCEtLSBGb25kIHJvdWdlIFBpY25pYyAtLT4KICA8cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgcng9IjM2IiBmaWxsPSIjZTgxODFiIi8+CgogIDwhLS0gTEFCRUwgLS0+CiAgPHRleHQKICAgIHg9IjEwMCIKICAgIHk9IjkwIgogICAgZm9udC1mYW1pbHk9IidBcmlhbCBCbGFjaycsICdIZWx2ZXRpY2EgTmV1ZScsIHNhbnMtc2VyaWYiCiAgICBmb250LXdlaWdodD0iOTAwIgogICAgZm9udC1zaXplPSI0NiIKICAgIGZpbGw9IndoaXRlIgogICAgdGV4dC1hbmNob3I9Im1pZGRsZSIKICAgIGxldHRlci1zcGFjaW5nPSItMSIKICA+TEFCRUw8L3RleHQ+CgoKCiAgPCEtLSBHRU4gLS0+CiAgPHRleHQKICAgIHg9IjEwMCIKICAgIHk9IjE1OCIKICAgIGZvbnQtZmFtaWx5PSInQXJpYWwgQmxhY2snLCAnSGVsdmV0aWNhIE5ldWUnLCBzYW5zLXNlcmlmIgogICAgZm9udC13ZWlnaHQ9IjkwMCIKICAgIGZvbnQtc2l6ZT0iNTYiCiAgICBmaWxsPSJ3aGl0ZSIKICAgIHRleHQtYW5jaG9yPSJtaWRkbGUiCiAgICBsZXR0ZXItc3BhY2luZz0iNCIKICA+R0VOPC90ZXh0Pgo8L3N2Zz4K",
+      "sizes": "512x512",
+      "type": "image/svg+xml"
+    }
+  ]
+}
